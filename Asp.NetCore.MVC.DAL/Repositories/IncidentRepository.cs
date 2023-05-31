@@ -29,9 +29,17 @@ public class IncidentRepository : IIncidentRepository
 		return await _appDbContext.DbTableIncidents.ToListAsync();
 	}
 
-	public bool DeleteAsync(DbTableIncident entity)
+	public async Task<bool> DeleteAsync(DbTableIncident entity)
 	{
 		_appDbContext.DbTableIncidents.Remove(entity);
 		return _appDbContext.SaveChangesAsync().IsCompletedSuccessfully;
+	}
+
+	public async Task<DbTableIncident> Update(DbTableIncident entity)
+	{
+		_appDbContext.DbTableIncidents.Update(entity);
+		await _appDbContext.SaveChangesAsync();
+
+		return entity;
 	}
 }

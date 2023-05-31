@@ -2,7 +2,7 @@
 
 namespace Asp.NetCore.MVC.Domain.Responce;
 
-public class BaseResponce<T> : IBaseResponce<T>
+public class Responce<T> : IResponce<T>
 {
 	public string Description { get; set; }
 	public StatusCode StatusCode { get; set; }

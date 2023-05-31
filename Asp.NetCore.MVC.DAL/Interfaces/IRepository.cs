@@ -7,5 +7,7 @@ public interface IRepository<T>
 	Task<bool> Create(T entity);
 	Task<DbTableIncident?> Get(int Id);
 	Task<List<DbTableIncident>> GetAll();
-	bool DeleteAsync(T entity);
+	Task<bool> DeleteAsync(T entity);
+
+	Task<T> Update(T entity);
 }
