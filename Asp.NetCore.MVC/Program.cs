@@ -1,7 +1,18 @@
+using Asp.NetCore.MVC.DAL;
+using Asp.NetCore.MVC.DAL.Interfaces;
+using Asp.NetCore.MVC.DAL.Repositories;
+using Asp.NetCore.MVC.Service.Implementations;
+using Asp.NetCore.MVC.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+var connetion = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connetion));
+builder.Services.AddTransient<IIncidentRepository, IncidentRepository>();
+builder.Services.AddTransient<IIncidentService, IncidentService>();
 
 var app = builder.Build();
 
@@ -21,7 +32,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+	"default",
+	"{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

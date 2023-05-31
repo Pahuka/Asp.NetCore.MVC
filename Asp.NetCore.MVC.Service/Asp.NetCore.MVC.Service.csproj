@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+    <Folder Include="Implementations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Asp.NetCore.MVC.DAL\Asp.NetCore.MVC.DAL.csproj" />
+    <ProjectReference Include="..\Asp.NetCore.MVC.Domain\Asp.NetCore.MVC.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

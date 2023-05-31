@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncident>
+
+@foreach (var incindent in Model)
+{
+	<p>@incindent.IncidentNumber</p>
+	<p>@incindent.Title</p>
+	<p>@incindent.Author</p>
+	<p>@incindent.Requisites</p>
+	<p>@incindent.Content</p>
+	<p>@incindent.EditingDate</p>
+}
