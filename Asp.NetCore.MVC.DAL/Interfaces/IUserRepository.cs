@@ -2,6 +2,6 @@
 
 namespace Asp.NetCore.MVC.DAL.Interfaces;
 
-public interface IIncidentRepository : IRepository<DbTableIncident>
+public interface IUserRepository : IRepository<DbTableUser>
 {
 }

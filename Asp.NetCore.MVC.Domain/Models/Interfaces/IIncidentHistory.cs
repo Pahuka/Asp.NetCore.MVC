@@ -2,7 +2,7 @@
 
 public interface IIncidentHistory
 {
-	public int IncidentNumber { get; set; }
-	public Guid UserId { get; set; }
-	public string Content { get; set; }
+    public int IncidentNumber { get; set; }
+    public Guid UserId { get; set; }
+    public string Content { get; set; }
 }

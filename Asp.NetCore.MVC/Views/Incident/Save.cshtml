@@ -1,0 +1,38 @@
+﻿@model Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentViewModel
+@{
+	var textTitle = Model?.IncidentNumber == 0 ? "Изменение данных" : "Добавление данных";
+}
+
+<div style="padding: 10px;"/>
+<div class="col-md-12">
+	<div class="card-body">
+		<div class="card card-outline-secondary" style="background-color: white">
+			<div class="card-header">
+				<h3 class="mb-0 text-center ParagraphHome">@textTitle</h3>
+			</div>
+			<div class="card-body">
+				<form asp-action="Save" enctype="multipart/form-data">
+					<input asp-for="IncidentNumber" hidden/>
+					<div asp-validation-summary="All" style="font-size:23px; font-family:Impact, serif" class="text-danger text-center"></div>
+					<div class="form-group">
+						<label asp-for="Title"></label>
+						<input asp-for="Title" class="form-control" type="text">
+					</div>
+					<div class="form-group">
+						<label asp-for="Author"></label>
+						<input asp-for="Author" class="form-control" type="text">
+					</div>
+					<div class="form-group">
+						<label asp-for="Requisites"></label>
+						<input asp-for="Requisites" class="form-control" type="text">
+					</div>
+					<div class="form-group">
+						<label asp-for="Content"></label>
+						<textarea asp-for="Content" class="form-control"></textarea>
+					</div>
+					<button class="btn btn-primary btn-lg float-right" type="submit">Отправить</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

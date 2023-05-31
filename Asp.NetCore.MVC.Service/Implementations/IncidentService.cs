@@ -9,153 +9,162 @@ namespace Asp.NetCore.MVC.Service.Implementations;
 
 public class IncidentService : IIncidentService
 {
-	private readonly IIncidentRepository _incidentRepository;
+    private readonly IIncidentRepository _incidentRepository;
 
-	public IncidentService(IIncidentRepository incidentRepository)
-	{
-		_incidentRepository = incidentRepository;
-	}
+    public IncidentService(IIncidentRepository incidentRepository)
+    {
+        _incidentRepository = incidentRepository;
+    }
 
-	public async Task<IResponce<bool>> Create(IncidentViewModel incidentViewModel)
-	{
-		var responce = new Responce<bool>();
-		try
-		{
-			var incident = new DbTableIncident()
-			{
-				Author = incidentViewModel.Author,
-				Requisites = incidentViewModel.Requisites,
-				Content = incidentViewModel.Content,
-				Title = incidentViewModel.Title,
-				IncidentNumber = incidentViewModel.IncidentNumber
-			};
+    public async Task<IResponce<bool>> Create(IncidentViewModel incidentViewModel)
+    {
+        var responce = new Responce<bool>();
+        try
+        {
+            var incident = new DbTableIncident
+            {
+                Author = incidentViewModel.Author,
+                Requisites = incidentViewModel.Requisites,
+                Content = incidentViewModel.Content,
+                Title = incidentViewModel.Title,
+                IncidentNumber = incidentViewModel.IncidentNumber
+            };
 
-			responce.Data = await _incidentRepository.Create(incident);
+            responce.Data = await _incidentRepository.Create(incident);
 
-			return responce;
+            return responce;
+        }
+        catch (Exception e)
+        {
+            return new Responce<bool>
+            {
+                Description = $"[Create] : {e.Message}",
+                Data = false
+            };
+        }
+    }
 
-		}
-		catch (Exception e)
-		{
-			return new Responce<bool>
-			{
-				Description = $"[Create] : {e.Message}",
-				Data = false
-			};
-		}
-	}
-	
-	public async Task<IResponce<bool>> Delete(int id)
-	{
-		var responce = new Responce<bool>();
-		try
-		{
-			var incident = await _incidentRepository.Get(id);
-			if (incident == null)
-			{
-				responce.Description = $"Иницдент с номером {id} не найден";
-				responce.StatusCode = StatusCode.OK;
-				return responce;
-			}
+    public async Task<IResponce<bool>> Delete(int id)
+    {
+        var responce = new Responce<bool>();
+        try
+        {
+            var incident = await _incidentRepository.Get(id);
+            if (incident == null)
+            {
+                responce.Description = $"Иницдент с номером {id} не найден";
+                responce.StatusCode = StatusCode.OK;
+                return responce;
+            }
 
-			responce.Data = await _incidentRepository.DeleteAsync(incident);
-			return responce;
-		}
-		catch (Exception e)
-		{
-			return new Responce<bool>
-			{
-				Description = $"[Delete] : {e.Message}",
-				Data = false
-			};
-		}
-	}
+            responce.Data = await _incidentRepository.DeleteAsync(incident);
+            return responce;
+        }
+        catch (Exception e)
+        {
+            return new Responce<bool>
+            {
+                Description = $"[Delete] : {e.Message}",
+                Data = false
+            };
+        }
+    }
 
-	public async Task<IResponce<DbTableIncident>> GetIncident(int id)
-	{
-		var responce = new Responce<DbTableIncident>();
-		try
-		{
-			var incident = await _incidentRepository.Get(id);
-			if (incident == null)
-			{
-				responce.Description = $"Иницдент с номером {id} не найден";
-				responce.StatusCode = StatusCode.OK;
-				return responce;
-			}
+    public async Task<IResponce<IncidentViewModel>> GetIncident(int id)
+    {
+        var responce = new Responce<IncidentViewModel>();
+        try
+        {
+            var incident = await _incidentRepository.Get(id);
+            if (incident == null)
+            {
+                responce.Description = $"Иницдент с номером {id} не найден";
+                responce.StatusCode = StatusCode.OK;
+                return responce;
+            }
 
-			responce.Data = incident;
-			return responce;
-		}
-		catch (Exception e)
-		{
-			return new Responce<DbTableIncident>
-			{
-				Description = $"[GetIncident] : {e.Message}"
-			};
-		}
-	}
+            var incidentViewModel = new IncidentViewModel
+            {
+                Requisites = incident.Requisites,
+                Author = incident.Author,
+                Content = incident.Content,
+                IncidentNumber = incident.IncidentNumber,
+                Title = incident.Title
+            };
 
-	public async Task<IResponce<DbTableIncident>> Edit(int id, IncidentViewModel incidentViewModel)
-	{
-		var responce = new Responce<DbTableIncident>();
-		try
-		{
-			var incident = await _incidentRepository.Get(id);
+            responce.StatusCode = StatusCode.OK;
+            responce.Data = incidentViewModel;
+            return responce;
+        }
+        catch (Exception e)
+        {
+            return new Responce<IncidentViewModel>
+            {
+                Description = $"[GetIncident] : {e.Message}"
+            };
+        }
+    }
 
-			if (incident == null)
-			{
-				responce.Description = "Найдено 0 инцидентов";
-				responce.StatusCode = StatusCode.NotFound;
-				return responce;
-			}
+    public async Task<IResponce<DbTableIncident>> Edit(int id, IncidentViewModel incidentViewModel)
+    {
+        var responce = new Responce<DbTableIncident>();
+        try
+        {
+            var incident = await _incidentRepository.Get(id);
 
-			incident.Author = incidentViewModel.Author;
-			incident.Content = incidentViewModel.Content;
-			incident.Title = incidentViewModel.Title;
-			incident.Requisites = incidentViewModel.Requisites;
-			incident.IncidentNumber = incidentViewModel.IncidentNumber;
+            if (incident == null)
+            {
+                responce.Description = "Найдено 0 инцидентов";
+                responce.StatusCode = StatusCode.NotFound;
+                return responce;
+            }
 
-			await _incidentRepository.Update(incident);
-			responce.Data = incident;
-			responce.StatusCode = StatusCode.OK;
+            incident.Author = incidentViewModel.Author;
+            incident.Content = incidentViewModel.Content;
+            incident.Title = incidentViewModel.Title;
+            incident.Requisites = incidentViewModel.Requisites;
+            incident.IncidentNumber = incidentViewModel.IncidentNumber;
 
-			return responce;
-		}
-		catch (Exception e)
-		{
-			return new Responce<DbTableIncident>
-			{
-				Description = $"[Edit] : {e.Message}"
-			};
-		}
-	}
+            await _incidentRepository.Update(incident);
+            responce.Data = incident;
+            responce.StatusCode = StatusCode.OK;
 
-	public async Task<IResponce<IEnumerable<DbTableIncident>>> GetIncidents()
-	{
-		var responce = new Responce<IEnumerable<DbTableIncident>>();
-		try
-		{
-			var incidents = _incidentRepository.GetAll().Result;
+            return responce;
+        }
+        catch (Exception e)
+        {
+            return new Responce<DbTableIncident>
+            {
+                Description = $"[Edit] : {e.Message}"
+            };
+        }
+    }
 
-			if (incidents.Count == 0)
-			{
-				responce.Description = "Найдено 0 инцидентов";
-				responce.StatusCode = StatusCode.OK;
-				return responce;
-			}
+    public async Task<IResponce<IEnumerable<DbTableIncident>>> GetIncidents()
+    {
+        var responce = new Responce<IEnumerable<DbTableIncident>>();
+        try
+        {
+            var incidents = _incidentRepository.GetAll().Result;
 
-			responce.Data = incidents;
-			responce.StatusCode = StatusCode.OK;
+            if (incidents.Count() == 0)
+            {
+                responce.Description = "Найдено 0 инцидентов";
+                responce.StatusCode = StatusCode.OK;
+                return responce;
+            }
 
-			return responce;
-		}
-		catch (Exception e)
-		{
-			return new Responce<IEnumerable<DbTableIncident>>
-			{
-				Description = $"[GetIncidents] : {e.Message}"
-			};
-		}
-	}
+            responce.Data = incidents;
+            responce.StatusCode = StatusCode.OK;
+
+            return responce;
+        }
+        catch (Exception e)
+        {
+            return new Responce<IEnumerable<DbTableIncident>>
+            {
+                Description = $"[GetIncidents] : {e.Message}"
+            };
+        }
+    }
 }

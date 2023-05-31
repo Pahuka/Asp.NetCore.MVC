@@ -1,11 +1,30 @@
 ﻿@model IEnumerable<Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncident>
 
-@foreach (var incindent in Model)
-{
-	<p>@incindent.IncidentNumber</p>
-	<p>@incindent.Title</p>
-	<p>@incindent.Author</p>
-	<p>@incindent.Requisites</p>
-	<p>@incindent.Content</p>
-	<p>@incindent.EditingDate</p>
+<style>
+table, th, td {
+  border:2px solid black;
 }
+</style>
+
+
+<table style="width:100%">
+	<tr>
+		<th>IncidentNumber</th>
+		<th>Title</th>
+		<th>Author</th>
+		<th>Requisites</th>
+		<th>Content</th>
+		<th>EditingDate</th>
+	</tr>
+	@foreach (var incindent in Model)
+	{
+		<tr>
+			<td>@incindent.IncidentNumber</td>
+			<td>@incindent.Title</td>
+			<td>@incindent.Author</td>
+			<td>@incindent.Requisites</td>
+			<td>@incindent.Content</td>
+			<td>@incindent.EditingDate</td>
+		</tr>
+	}
+</table>

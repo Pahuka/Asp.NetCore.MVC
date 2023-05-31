@@ -7,65 +7,65 @@ namespace Asp.NetCore.MVC.Controllers;
 
 public class IncidentController : Controller
 {
-	private readonly IIncidentService _incidentService;
+    private readonly IIncidentService _incidentService;
 
-	public IncidentController(IIncidentService incidentService)
-	{
-		_incidentService = incidentService;
-	}
+    public IncidentController(IIncidentService incidentService)
+    {
+        _incidentService = incidentService;
+    }
 
 
-	[HttpGet]
-	public async Task<IActionResult> GetIncidents()
-	{
-		var responce = await _incidentService.GetIncidents();
-		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
-			return View(responce.Data);
-		return RedirectToAction("Error");
-	}
+    [HttpGet]
+    public async Task<IActionResult> GetIncidents()
+    {
+        var responce = await _incidentService.GetIncidents();
+        if (responce.StatusCode == Domain.Enum.StatusCode.OK)
+            return View(responce.Data);
+        return RedirectToAction("Error");
+    }
 
-	[HttpGet]
-	public async Task<IActionResult> GetIncident(int id)
-	{
-		var responce = await _incidentService.GetIncident(id);
-		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
-			return View(responce.Data);
-		return RedirectToAction("Error");
-	}
+    [HttpGet]
+    public async Task<IActionResult> GetIncident(int id)
+    {
+        var responce = await _incidentService.GetIncident(id);
+        if (responce.StatusCode == Domain.Enum.StatusCode.OK)
+            return View(responce.Data);
+        return RedirectToAction("Error");
+    }
 
-	[Authorize(Roles = "Admin")]
-	public async Task<IActionResult> RemoveIncident(int id)
-	{
-		var responce = await _incidentService.Delete(id);
-		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
-			RedirectToAction("GetIncidents");
-		return RedirectToAction("Error");
-	}
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> RemoveIncident(int id)
+    {
+        var responce = await _incidentService.Delete(id);
+        if (responce.StatusCode == Domain.Enum.StatusCode.OK)
+            RedirectToAction("GetIncidents");
+        return RedirectToAction("Error");
+    }
 
-	[HttpGet]
-	[Authorize(Roles = "Admin")]
-	public async Task<IActionResult> Save(int id)
-	{
-		var responce = await _incidentService.GetIncident(id);
-		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
-			return RedirectToAction("GetIncidents");
-		return RedirectToAction("Error");
-	}
+    [HttpGet]
+    //[Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Save(int id)
+    {
+        if (id == 0)
+            return View();
 
-	[HttpPost]
-	[Authorize(Roles = "Admin")]
-	public async Task<IActionResult> Save(IncidentViewModel incidentViewModel)
-	{
-		if (ModelState.IsValid)
-		{
-			await _incidentService.Edit(incidentViewModel.IncidentNumber, incidentViewModel);
-		}
+        var responce = await _incidentService.GetIncident(id);
+        if (responce.StatusCode == Domain.Enum.StatusCode.OK)
+            return View(responce.Data);
+        return RedirectToAction("Error");
+    }
 
-		return RedirectToAction("GetIncidents");
-	}
+    [HttpPost]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> Save(IncidentViewModel incidentViewModel)
+    {
+        if (ModelState.IsValid) await _incidentService.Edit(incidentViewModel.IncidentNumber, incidentViewModel);
 
-	public IActionResult Error()
-	{
-		return View();
-	}
+        return RedirectToAction("GetIncidents");
+    }
+
+    public IActionResult Error()
+    {
+        return View();
+    }
 }
