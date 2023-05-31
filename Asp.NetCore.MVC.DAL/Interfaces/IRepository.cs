@@ -3,7 +3,6 @@
 public interface IRepository<T>
 {
     Task<bool> Create(T entity);
-    Task<T> Get(int Id);
     Task<IQueryable<T>> GetAll();
     Task<bool> DeleteAsync(T entity);
 

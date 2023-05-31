@@ -4,11 +4,10 @@ using Asp.NetCore.MVC.Domain.ViewModels.Incident;
 
 namespace Asp.NetCore.MVC.Service.Interfaces;
 
-public interface IIncidentService
+public interface IIncidentService : IServiceBase<DbTableIncident, IncidentViewModel>
 {
-    Task<IResponce<IEnumerable<DbTableIncident>>> GetIncidents();
-    Task<IResponce<bool>> Create(IncidentViewModel incidentViewModel);
+    Task<IResponce<IncidentViewModel>> GetById(int id);
+    Task<IResponce<DbTableIncident>> Edit(int id, IncidentViewModel viewModel);
+
     Task<IResponce<bool>> Delete(int id);
-    Task<IResponce<IncidentViewModel>> GetIncident(int id);
-    Task<IResponce<DbTableIncident>> Edit(int id, IncidentViewModel incidentViewModel);
 }

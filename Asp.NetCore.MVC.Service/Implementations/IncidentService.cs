@@ -70,7 +70,7 @@ public class IncidentService : IIncidentService
         }
     }
 
-    public async Task<IResponce<IncidentViewModel>> GetIncident(int id)
+    public async Task<IResponce<IncidentViewModel>> GetById(int id)
     {
         var responce = new Responce<IncidentViewModel>();
         try
@@ -140,7 +140,7 @@ public class IncidentService : IIncidentService
         }
     }
 
-    public async Task<IResponce<IEnumerable<DbTableIncident>>> GetIncidents()
+    public async Task<IResponce<IEnumerable<DbTableIncident>>> GetAll()
     {
         var responce = new Responce<IEnumerable<DbTableIncident>>();
         try
@@ -163,7 +163,7 @@ public class IncidentService : IIncidentService
         {
             return new Responce<IEnumerable<DbTableIncident>>
             {
-                Description = $"[GetIncidents] : {e.Message}"
+                Description = $"[GetAll] : {e.Message}"
             };
         }
     }

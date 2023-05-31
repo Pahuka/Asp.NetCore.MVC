@@ -12,7 +12,9 @@ builder.Services.AddControllersWithViews();
 var connetion = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connetion));
 builder.Services.AddTransient<IIncidentRepository, IncidentRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IIncidentService, IncidentService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 var app = builder.Build();
 

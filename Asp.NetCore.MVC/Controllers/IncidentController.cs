@@ -18,7 +18,7 @@ public class IncidentController : Controller
     [HttpGet]
     public async Task<IActionResult> GetIncidents()
     {
-        var responce = await _incidentService.GetIncidents();
+        var responce = await _incidentService.GetAll();
         if (responce.StatusCode == Domain.Enum.StatusCode.OK)
             return View(responce.Data);
         return RedirectToAction("Error");
@@ -27,7 +27,7 @@ public class IncidentController : Controller
     [HttpGet]
     public async Task<IActionResult> GetIncident(int id)
     {
-        var responce = await _incidentService.GetIncident(id);
+        var responce = await _incidentService.GetById(id);
         if (responce.StatusCode == Domain.Enum.StatusCode.OK)
             return View(responce.Data);
         return RedirectToAction("Error");
@@ -49,7 +49,7 @@ public class IncidentController : Controller
         if (id == 0)
             return View();
 
-        var responce = await _incidentService.GetIncident(id);
+        var responce = await _incidentService.GetById(id);
         if (responce.StatusCode == Domain.Enum.StatusCode.OK)
             return View(responce.Data);
         return RedirectToAction("Error");

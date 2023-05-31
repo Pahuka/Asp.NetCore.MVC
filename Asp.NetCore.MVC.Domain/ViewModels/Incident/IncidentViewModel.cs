@@ -1,6 +1,6 @@
 ﻿namespace Asp.NetCore.MVC.Domain.ViewModels.Incident;
 
-public class IncidentViewModel
+public class IncidentViewModel : ViewModelBase
 {
     public int IncidentNumber { get; set; }
     public string Content { get; set; }

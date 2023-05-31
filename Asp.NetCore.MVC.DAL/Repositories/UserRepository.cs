@@ -18,11 +18,6 @@ public class UserRepository : IUserRepository
         return _appDbContext.SaveChangesAsync().IsCompletedSuccessfully;
     }
 
-    public Task<DbTableUser> Get(int Id)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task<IQueryable<DbTableUser>> GetAll()
     {
         return _appDbContext.DbTableUsers.AsQueryable();
@@ -40,5 +35,10 @@ public class UserRepository : IUserRepository
         await _appDbContext.SaveChangesAsync();
 
         return entity;
+    }
+
+    public Task<DbTableUser> Get(string login)
+    {
+        throw new NotImplementedException();
     }
 }
