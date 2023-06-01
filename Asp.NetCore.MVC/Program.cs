@@ -15,6 +15,7 @@ builder.Services.AddTransient<IIncidentRepository, IncidentRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IIncidentService, IncidentService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAccountService, AccountService>();
 
 var app = builder.Build();
 

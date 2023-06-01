@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Enum\" />
     <Folder Include="ViewModels\Incident\" />
+    <Folder Include="ViewModels\Account\" />
   </ItemGroup>
 
 </Project>
