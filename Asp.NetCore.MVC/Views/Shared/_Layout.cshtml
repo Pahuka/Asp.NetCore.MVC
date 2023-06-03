@@ -10,6 +10,13 @@
 </head>
 <body>
 <header>
+	@if (User.Identity.IsAuthenticated)
+	{
+		<p>Вы авторизованы под логином @User.Identity.Name</p>
+		<form method="post" asp-controller="Account" asp-action="Logout">
+			<input class="btn btn-danger rounded" style="font-family:'Comic Sans MS'; font-weight: bold; font-size:20px;" type="submit" value="Выход"/>
+		</form>
+	}
 	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 		<div class="container-fluid">
 			<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Asp.NetCore.MVC</a>
@@ -25,16 +32,28 @@
 					<li class="nav-item">
 						<a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="GetIncidents">Get All Incidents</a>
 					</li>
-					@*@if (User.IsInRole("Admin"))*@
+					@if (!User.Identity.IsAuthenticated)
 					{
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Save">Save Incident</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="RemoveIncident">Remove Incident</a>
-					</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+						</li>
 					}
-					<partial name="_LoginPartial" />
+					@if (User.IsInRole("User"))
+					{
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="Create">Create Incident</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="GetIncident">Get Incident</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="RemoveIncident">Remove Incident</a>
+						</li>
+					}
+					@*<partial name="_LoginPartial" />*@
 				</ul>
 			</div>
 		</div>

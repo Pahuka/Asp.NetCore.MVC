@@ -31,7 +31,9 @@ public class AccountService : IAccountService
 
             user = new DbTableUser
             {
-                FirstName = model.Name,
+                Login = model.Name,
+                FirstName = "",
+                LastName = "",
                 IsAdministrator = false,
                 Password = model.Password
             };
@@ -61,7 +63,7 @@ public class AccountService : IAccountService
     {
         try
         {
-            var user = await _userRepository.GetAll().Result.FirstOrDefaultAsync(x => x.FirstName == model.Name);
+            var user = await _userRepository.GetAll().Result.FirstOrDefaultAsync(x => x.Login == model.Name);
             if (user == null)
                 return new Responce<ClaimsIdentity>
                 {
@@ -128,7 +130,7 @@ public class AccountService : IAccountService
         var role = user.IsAdministrator ? "Administrator" : "User";
         var claims = new List<Claim>
         {
-            new(ClaimsIdentity.DefaultNameClaimType, user.FirstName),
+            new(ClaimsIdentity.DefaultNameClaimType, user.Login),
             new(ClaimsIdentity.DefaultRoleClaimType, role)
         };
         return new ClaimsIdentity(claims, "ApplicationCookie",

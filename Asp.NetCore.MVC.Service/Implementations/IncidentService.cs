@@ -23,11 +23,14 @@ public class IncidentService : IIncidentService
         {
             var incident = new DbTableIncident
             {
-                Author = incidentViewModel.Author,
-                Requisites = incidentViewModel.Requisites,
+                City = incidentViewModel.City,
+                Country = incidentViewModel.Country,
+                Region = incidentViewModel.Region,
+                IncidentFrom = incidentViewModel.IncidentFrom,
+                PhoneNumber = incidentViewModel.PhoneNumber,
                 Content = incidentViewModel.Content,
-                Title = incidentViewModel.Title,
-                IncidentNumber = incidentViewModel.IncidentNumber
+                Title = incidentViewModel.Title
+                //IncidentNumber = incidentViewModel.IncidentNumber
             };
 
             responce.Data = await _incidentRepository.Create(incident);
@@ -85,10 +88,13 @@ public class IncidentService : IIncidentService
 
             var incidentViewModel = new IncidentViewModel
             {
-                Requisites = incident.Requisites,
-                Author = incident.Author,
-                Content = incident.Content,
+                Country = incident.Country,
+                Region = incident.Region,
+                City = incident.City,
                 IncidentNumber = incident.IncidentNumber,
+                PhoneNumber = incident.PhoneNumber,
+                IncidentFrom = incident.IncidentFrom,
+                Content = incident.Content,
                 Title = incident.Title
             };
 
@@ -119,11 +125,13 @@ public class IncidentService : IIncidentService
                 return responce;
             }
 
-            incident.Author = incidentViewModel.Author;
+            incident.IncidentFrom = incidentViewModel.IncidentFrom;
+            incident.Country = incidentViewModel.Country;
+            incident.City = incidentViewModel.City;
+            incident.Region = incidentViewModel.Region;
             incident.Content = incidentViewModel.Content;
             incident.Title = incidentViewModel.Title;
-            incident.Requisites = incidentViewModel.Requisites;
-            incident.IncidentNumber = incidentViewModel.IncidentNumber;
+            incident.PhoneNumber = incidentViewModel.PhoneNumber;
 
             await _incidentRepository.Update(incident);
             responce.Data = incident;
@@ -150,7 +158,7 @@ public class IncidentService : IIncidentService
             if (incidents.Count() == 0)
             {
                 responce.Description = "Найдено 0 инцидентов";
-                responce.StatusCode = StatusCode.OK;
+                responce.StatusCode = StatusCode.NotFound;
                 return responce;
             }
 
