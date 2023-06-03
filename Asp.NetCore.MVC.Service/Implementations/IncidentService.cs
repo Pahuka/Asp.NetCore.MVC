@@ -56,10 +56,11 @@ public class IncidentService : IIncidentService
             if (incident == null)
             {
                 responce.Description = $"Иницдент с номером {id} не найден";
-                responce.StatusCode = StatusCode.OK;
+                responce.StatusCode = StatusCode.NotFound;
                 return responce;
             }
 
+            responce.StatusCode = StatusCode.OK;
             responce.Data = await _incidentRepository.DeleteAsync(incident);
             return responce;
         }
@@ -132,6 +133,7 @@ public class IncidentService : IIncidentService
             incident.Content = incidentViewModel.Content;
             incident.Title = incidentViewModel.Title;
             incident.PhoneNumber = incidentViewModel.PhoneNumber;
+            incident.EditingDate = DateTime.UtcNow;
 
             await _incidentRepository.Update(incident);
             responce.Data = incident;

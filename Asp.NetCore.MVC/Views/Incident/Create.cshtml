@@ -29,10 +29,8 @@
 						<input asp-for="Title" class="form-control" type="text">
 					</div>
 					<div class="form-group">
-						@Html.DropDownList("EnumFrom", 
-							Html.GetEnumSelectList<IncidentFrom>(), 
-							"Выберите источник обращения", 
-							new { @class = "enum-from" })
+						<label asp-for="IncidentFrom"></label>
+						<select asp-for="IncidentFrom" class="form-control" asp-items="Html.GetEnumSelectList<IncidentFrom>()"></select>
 					</div>
 					<div class="form-group">
 						<label asp-for="PhoneNumber"></label>

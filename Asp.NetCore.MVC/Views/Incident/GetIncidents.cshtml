@@ -9,15 +9,16 @@ table, th, td {
 
 <table style="width:100%">
 	<tr>
-		<th>IncidentNumber</th>
-		<th>Title</th>
-		<th>Country</th>
-		<th>Region</th>
-		<th>City</th>
-		<th>IncidentFrom</th>
-		<th>PhoneNumber</th>
-		<th>Content</th>
-		<th>EditingDate</th>
+		<th>Номер инцидента</th>
+		<th>Заголовок</th>
+		<th>Страна</th>
+		<th>Регион</th>
+		<th>Город</th>
+		<th>Источник инцидента</th>
+		<th>Номер телефона абонента</th>
+		<th>Текст обращения</th>
+		<th>Дата редактирования</th>
+		<th>Действие</th>
 	</tr>
 	@foreach (var incindent in Model)
 	{
@@ -31,6 +32,16 @@ table, th, td {
 			<td>@incindent.PhoneNumber</td>
 			<td>@incindent.Content</td>
 			<td>@incindent.EditingDate</td>
+			<td>
+				<form asp-controller="Incident" asp-action="Edit" method="get">            
+					<input type="number" id="id" name="id" value="@incindent.IncidentNumber" hidden="true"/>
+					<input type="submit" value="Редактировать" class="btn btn-outline-dark" />
+				</form>
+				<form asp-controller="Incident" asp-action="RemoveIncident">
+					<input type="number" id="id" name="id" value="@incindent.IncidentNumber" hidden="true" />
+					<input type="submit" value="Удалить" class="btn btn-outline-dark" />
+				</form>
+			</td>
 		</tr>
 	}
 </table>

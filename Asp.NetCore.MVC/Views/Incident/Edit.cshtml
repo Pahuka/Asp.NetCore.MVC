@@ -1,26 +1,37 @@
-﻿@model Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentViewModel
-@{
-	var textTitle = Model?.IncidentNumber == 0 ? "Изменение данных" : "Добавление данных";
-}
+﻿@using Asp.NetCore.MVC.Domain.Enum
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentViewModel
 
 <div style="padding: 10px;"/>
 <div class="col-md-12">
 	<div class="card-body">
 		<div class="card card-outline-secondary" style="background-color: white">
 			<div class="card-header">
-				<h3 class="mb-0 text-center ParagraphHome">@textTitle</h3>
+				<h3 class="mb-0 text-center ParagraphHome">Изменение данных</h3>
 			</div>
 			<div class="card-body">
-				<form asp-action="Save" enctype="multipart/form-data">
-					<input asp-for="IncidentNumber"/>
+				<form asp-action="Edit" enctype="multipart/form-data">
+					<input asp-for="IncidentNumber" hidden/>
 					<div asp-validation-summary="All" style="font-size:23px; font-family:Impact, serif" class="text-danger text-center"></div>
+					<div class="form-group">
+						<label asp-for="Country"></label>
+						<input asp-for="Country" class="form-control" type="text">
+					</div>
+					<div class="form-group">
+						<label asp-for="Region"></label>
+						<input asp-for="Region" class="form-control" type="text">
+					</div>
+					<div class="form-group">
+						<label asp-for="City"></label>
+						<input asp-for="City" class="form-control" type="text">
+					</div>
 					<div class="form-group">
 						<label asp-for="Title"></label>
 						<input asp-for="Title" class="form-control" type="text">
 					</div>
 					<div class="form-group">
 						<label asp-for="IncidentFrom"></label>
-						<input asp-for="IncidentFrom" class="form-control" type="text">
+						<select asp-for="IncidentFrom" class="form-control" asp-items="Html.GetEnumSelectList<IncidentFrom>()"></select>
 					</div>
 					<div class="form-group">
 						<label asp-for="PhoneNumber"></label>
