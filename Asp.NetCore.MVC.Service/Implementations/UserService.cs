@@ -16,9 +16,9 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<IResponce<IEnumerable<DbTableUser>>> GetAll()
+    public async Task<IResponce<IQueryable<DbTableUser>>> GetAll()
     {
-        var responce = new Responce<IEnumerable<DbTableUser>>();
+        var responce = new Responce<IQueryable<DbTableUser>>();
         try
         {
             var users = _userRepository.GetAll().Result;
@@ -37,7 +37,7 @@ public class UserService : IUserService
         }
         catch (Exception e)
         {
-            return new Responce<IEnumerable<DbTableUser>>
+            return new Responce<IQueryable<DbTableUser>>
             {
                 Description = $"[GetAll] : {e.Message}"
             };

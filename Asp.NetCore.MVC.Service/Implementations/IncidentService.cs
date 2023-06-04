@@ -30,7 +30,6 @@ public class IncidentService : IIncidentService
                 PhoneNumber = incidentViewModel.PhoneNumber,
                 Content = incidentViewModel.Content,
                 Title = incidentViewModel.Title
-                //IncidentNumber = incidentViewModel.IncidentNumber
             };
 
             responce.Data = await _incidentRepository.Create(incident);
@@ -112,9 +111,9 @@ public class IncidentService : IIncidentService
         }
     }
 
-    public async Task<IResponce<DbTableIncident>> Edit(int id, IncidentViewModel incidentViewModel)
+    public async Task<IResponce<IncidentViewModel>> Edit(int id, IncidentViewModel incidentViewModel)
     {
-        var responce = new Responce<DbTableIncident>();
+        var responce = new Responce<IncidentViewModel>();
         try
         {
             var incident = await _incidentRepository.Get(id);
@@ -133,26 +132,26 @@ public class IncidentService : IIncidentService
             incident.Content = incidentViewModel.Content;
             incident.Title = incidentViewModel.Title;
             incident.PhoneNumber = incidentViewModel.PhoneNumber;
-            incident.EditingDate = DateTime.UtcNow;
+            incident.EditingDate = DateTime.Now;
 
             await _incidentRepository.Update(incident);
-            responce.Data = incident;
+            responce.Data = incidentViewModel;
             responce.StatusCode = StatusCode.OK;
 
             return responce;
         }
         catch (Exception e)
         {
-            return new Responce<DbTableIncident>
+            return new Responce<IncidentViewModel>
             {
                 Description = $"[Edit] : {e.Message}"
             };
         }
     }
 
-    public async Task<IResponce<IEnumerable<DbTableIncident>>> GetAll()
+    public async Task<IResponce<IQueryable<DbTableIncident>>> GetAll()
     {
-        var responce = new Responce<IEnumerable<DbTableIncident>>();
+        var responce = new Responce<IQueryable<DbTableIncident>>();
         try
         {
             var incidents = _incidentRepository.GetAll().Result;
@@ -171,7 +170,7 @@ public class IncidentService : IIncidentService
         }
         catch (Exception e)
         {
-            return new Responce<IEnumerable<DbTableIncident>>
+            return new Responce<IQueryable<DbTableIncident>>
             {
                 Description = $"[GetAll] : {e.Message}"
             };

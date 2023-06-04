@@ -1,7 +1,8 @@
-﻿using Asp.NetCore.MVC.Domain.ViewModels.Incident;
+﻿using Asp.NetCore.MVC.Domain.Models.Tables;
+using Asp.NetCore.MVC.Domain.ViewModels.Incident;
 using Asp.NetCore.MVC.Service.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Asp.NetCore.MVC.Controllers;
 
@@ -14,13 +15,33 @@ public class IncidentController : Controller
 		_incidentService = incidentService;
 	}
 
-
 	[HttpGet]
-	public async Task<IActionResult> GetIncidents()
+	public async Task<IActionResult> GetIncidents(int IncidentNumber, string IncidentFrom, string PhoneNumber)
 	{
 		var responce = await _incidentService.GetAll();
+		var tempResult = responce.Data;
+
+		if (IncidentNumber != null && IncidentNumber != 0)
+			tempResult = responce.Data.Where(x => x.IncidentNumber.Equals(IncidentNumber));
+		if (!string.IsNullOrEmpty(PhoneNumber) && !PhoneNumber.Equals("Все"))
+			tempResult = responce.Data.Where(x => x.PhoneNumber.Equals(PhoneNumber));
+		if (!string.IsNullOrEmpty(IncidentFrom) && !IncidentFrom.Equals("Все"))
+			tempResult = responce.Data.Where(x => x.IncidentFrom.Equals(IncidentFrom));
+
+		var incidentSearch = new IncidentSearchViewModel
+		{
+			Incidents = new List<DbTableIncident>(),
+			PhoneNumber = new SelectList(responce.Data.Select(x => x.PhoneNumber).ToList().Append("Все")),
+			IncidentNumber = new SelectList(responce.Data.Select(x => x.IncidentNumber).ToList().Append(0))
+		};
+
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
-			return View(responce.Data);
+		{
+			incidentSearch.Incidents = tempResult.ToList();
+
+			return View(incidentSearch);
+		}
+
 		return RedirectToAction("Error");
 	}
 

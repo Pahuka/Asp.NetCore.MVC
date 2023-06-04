@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncident>
+﻿@*@model IEnumerable<Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncident>*@
+@model Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentSearchViewModel
 
 <style>
 table, th, td {
@@ -6,21 +7,33 @@ table, th, td {
 }
 </style>
 
+<form method="get">
+	<div class="form-inline">
+		<label class="control-label">Номер обращения</label>
+		@Html.DropDownList("IncidentNumber", Model.IncidentNumber as SelectList, htmlAttributes: new {@class="form-control"})
+		<label class="control-label">Источник обращения</label>
+		@Html.DropDownList("IncidentFrom", Model.IncidentFrom as SelectList, htmlAttributes: new {@class="form-control"})
+		<label class="control-label">Номер телефона абонента</label>
+		@Html.DropDownList("PhoneNumber", Model.PhoneNumber as SelectList, htmlAttributes: new {@class="form-control"})
+		
+		<input type="submit" value="Фильтр" class="btn btn-default"/>
+	</div>
+</form>
 
 <table style="width:100%">
 	<tr>
-		<th>Номер инцидента</th>
+		<th>Номер обращения</th>
 		<th>Заголовок</th>
 		<th>Страна</th>
 		<th>Регион</th>
 		<th>Город</th>
-		<th>Источник инцидента</th>
+		<th>Источник обращения</th>
 		<th>Номер телефона абонента</th>
-		<th>Текст обращения</th>
+		<th>Причина обращения</th>
 		<th>Дата редактирования</th>
 		<th>Действие</th>
 	</tr>
-	@foreach (var incindent in Model)
+	@foreach (var incindent in Model.Incidents)
 	{
 		<tr>
 			<td>@incindent.IncidentNumber</td>
@@ -33,13 +46,13 @@ table, th, td {
 			<td>@incindent.Content</td>
 			<td>@incindent.EditingDate</td>
 			<td>
-				<form asp-controller="Incident" asp-action="Edit" method="get">            
+				<form asp-controller="Incident" asp-action="Edit" method="get">
 					<input type="number" id="id" name="id" value="@incindent.IncidentNumber" hidden="true"/>
-					<input type="submit" value="Редактировать" class="btn btn-outline-dark" />
+					<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>
 				</form>
 				<form asp-controller="Incident" asp-action="RemoveIncident">
-					<input type="number" id="id" name="id" value="@incindent.IncidentNumber" hidden="true" />
-					<input type="submit" value="Удалить" class="btn btn-outline-dark" />
+					<input type="number" id="id" name="id" value="@incindent.IncidentNumber" hidden="true"/>
+					<input type="submit" value="Удалить" class="btn btn-outline-dark"/>
 				</form>
 			</td>
 		</tr>

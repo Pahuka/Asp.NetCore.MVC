@@ -1,6 +1,5 @@
 ﻿using Asp.NetCore.MVC.Domain.Models.Tables;
 using Asp.NetCore.MVC.Domain.Responce;
-using Asp.NetCore.MVC.Domain.ViewModels.Incident;
 using Asp.NetCore.MVC.Domain.ViewModels.User;
 
 namespace Asp.NetCore.MVC.Service.Interfaces;

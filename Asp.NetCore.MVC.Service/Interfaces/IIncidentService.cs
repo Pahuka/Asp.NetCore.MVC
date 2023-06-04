@@ -7,7 +7,7 @@ namespace Asp.NetCore.MVC.Service.Interfaces;
 public interface IIncidentService : IServiceBase<DbTableIncident, IncidentViewModel>
 {
     Task<IResponce<IncidentViewModel>> GetById(int id);
-    Task<IResponce<DbTableIncident>> Edit(int id, IncidentViewModel viewModel);
+    Task<IResponce<IncidentViewModel>> Edit(int id, IncidentViewModel viewModel);
 
     Task<IResponce<bool>> Delete(int id);
 }
