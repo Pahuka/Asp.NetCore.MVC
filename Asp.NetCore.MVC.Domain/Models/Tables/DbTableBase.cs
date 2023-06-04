@@ -2,12 +2,12 @@
 
 public abstract class DbTableBase
 {
-    protected DbTableBase()
-    {
-        Id = Guid.NewGuid();
-        EditingDate = DateTime.UtcNow;
-    }
+	protected DbTableBase()
+	{
+		Id = Guid.NewGuid();
+		EditingDate = DateTime.UtcNow;
+	}
 
-    public Guid Id { get; private set; }
-    public DateTime EditingDate { get; set; }
+	public Guid Id { get; private set; }
+	public DateTime EditingDate { get; set; }
 }

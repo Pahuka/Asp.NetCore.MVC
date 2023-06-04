@@ -25,6 +25,8 @@ public class IncidentController : Controller
 			tempResult = responce.Data.Where(x => x.IncidentNumber.Equals(IncidentNumber));
 		if (!string.IsNullOrEmpty(PhoneNumber) && !PhoneNumber.Equals("Все"))
 			tempResult = responce.Data.Where(x => x.PhoneNumber.Equals(PhoneNumber));
+		
+		//TODO: Исправить поиск по IncidentFrom
 		if (!string.IsNullOrEmpty(IncidentFrom) && !IncidentFrom.Equals("Все"))
 			tempResult = responce.Data.Where(x => x.IncidentFrom.Equals(IncidentFrom));
 

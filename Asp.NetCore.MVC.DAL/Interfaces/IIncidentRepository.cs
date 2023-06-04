@@ -4,5 +4,5 @@ namespace Asp.NetCore.MVC.DAL.Interfaces;
 
 public interface IIncidentRepository : IRepository<DbTableIncident>
 {
-    Task<DbTableIncident> Get(int Id);
+	Task<DbTableIncident> Get(int Id);
 }

@@ -10,8 +10,9 @@ public class IncidentSearchViewModel : ViewModelBase
 	{
 		IncidentFrom = new SelectList(System.Enum.GetNames<IncidentFrom>().Append("Все"));
 	}
-    public List<DbTableIncident> Incidents { get; set; }
-    public SelectList IncidentNumber { get; set; }
-    public SelectList IncidentFrom { get; set; }
-    public SelectList PhoneNumber { get; set; }
+
+	public List<DbTableIncident> Incidents { get; set; }
+	public SelectList IncidentNumber { get; set; }
+	public SelectList IncidentFrom { get; set; }
+	public SelectList PhoneNumber { get; set; }
 }

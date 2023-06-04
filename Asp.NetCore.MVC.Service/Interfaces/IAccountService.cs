@@ -6,9 +6,9 @@ namespace Asp.NetCore.MVC.Service.Interfaces;
 
 public interface IAccountService
 {
-    Task<Responce<ClaimsIdentity>> Register(RegisterViewModel model);
+	Task<Responce<ClaimsIdentity>> Register(RegisterViewModel model);
 
-    Task<Responce<ClaimsIdentity>> Login(LoginViewModel model);
+	Task<Responce<ClaimsIdentity>> Login(LoginViewModel model);
 
-    Task<Responce<bool>> ChangePassword(ChangePasswordViewModel model);
+	Task<Responce<bool>> ChangePassword(ChangePasswordViewModel model);
 }

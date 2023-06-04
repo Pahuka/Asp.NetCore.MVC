@@ -2,6 +2,6 @@
 
 public enum IncidentFrom
 {
-    ServiceOffice = 0,
-    CallCentre = 1
+	ServiceOffice = 0,
+	CallCentre = 1
 }

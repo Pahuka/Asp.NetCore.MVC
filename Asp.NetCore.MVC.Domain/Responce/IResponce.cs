@@ -4,6 +4,6 @@ namespace Asp.NetCore.MVC.Domain.Responce;
 
 public interface IResponce<T>
 {
-    T Data { get; set; }
-    StatusCode StatusCode { get; set; }
+	T Data { get; set; }
+	StatusCode StatusCode { get; set; }
 }

@@ -6,8 +6,8 @@ namespace Asp.NetCore.MVC.Service.Interfaces;
 
 public interface IUserService : IServiceBase<DbTableUser, UserViewModel>
 {
-    Task<IResponce<UserViewModel>> GetByLogin(string login);
-    Task<IResponce<DbTableUser>> Edit(string login, UserViewModel viewModel);
+	Task<IResponce<UserViewModel>> GetByLogin(string login);
+	Task<IResponce<DbTableUser>> Edit(string login, UserViewModel viewModel);
 
-    Task<IResponce<bool>> Delete(string login);
+	Task<IResponce<bool>> Delete(string login);
 }

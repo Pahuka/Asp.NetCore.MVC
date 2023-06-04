@@ -10,13 +10,13 @@ table, th, td {
 <form method="get">
 	<div class="form-inline">
 		<label class="control-label">Номер обращения</label>
-		@Html.DropDownList("IncidentNumber", Model.IncidentNumber as SelectList, htmlAttributes: new {@class="form-control"})
+		@Html.DropDownList("IncidentNumber", Model.IncidentNumber, new { @class = "form-control" })
 		<label class="control-label">Источник обращения</label>
-		@Html.DropDownList("IncidentFrom", Model.IncidentFrom as SelectList, htmlAttributes: new {@class="form-control"})
+		@Html.DropDownList("IncidentFrom", Model.IncidentFrom, new { @class = "form-control" })
 		<label class="control-label">Номер телефона абонента</label>
-		@Html.DropDownList("PhoneNumber", Model.PhoneNumber as SelectList, htmlAttributes: new {@class="form-control"})
-		
-		<input type="submit" value="Фильтр" class="btn btn-default"/>
+		@Html.DropDownList("PhoneNumber", Model.PhoneNumber, new { @class = "form-control" })
+
+		<input type="submit" value="Фильтр" class="btn btn-outline-dark"/>
 	</div>
 </form>
 
@@ -46,6 +46,7 @@ table, th, td {
 			<td>@incindent.Content</td>
 			<td>@incindent.EditingDate</td>
 			<td>
+				@*TODO: Добавить проверку на роль пользователя*@
 				<form asp-controller="Incident" asp-action="Edit" method="get">
 					<input type="number" id="id" name="id" value="@incindent.IncidentNumber" hidden="true"/>
 					<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>

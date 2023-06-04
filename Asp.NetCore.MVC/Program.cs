@@ -13,11 +13,11 @@ builder.Services.AddControllersWithViews();
 var connetion = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connetion));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.LoginPath = new PathString("/Account/Login");
-        options.AccessDeniedPath = new PathString("/Account/Login");
-    });
+	.AddCookie(options =>
+	{
+		options.LoginPath = new PathString("/Account/Login");
+		options.AccessDeniedPath = new PathString("/Account/Login");
+	});
 builder.Services.AddTransient<IIncidentRepository, IncidentRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<IIncidentService, IncidentService>();
@@ -40,7 +40,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
-    "default",
-    "{controller=Home}/{action=Index}/{id?}");
+	"default",
+	"{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

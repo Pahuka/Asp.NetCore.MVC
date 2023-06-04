@@ -4,5 +4,5 @@ namespace Asp.NetCore.MVC.DAL.Interfaces;
 
 public interface IUserRepository : IRepository<DbTableUser>
 {
-    Task<DbTableUser> Get(string login);
+	Task<DbTableUser> Get(string login);
 }
