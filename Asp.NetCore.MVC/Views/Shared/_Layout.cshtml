@@ -38,7 +38,7 @@
 							<a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
 						</li>
 					}
-					@if (User.IsInRole("User"))
+					else
 					{
 						<li class="nav-item">
 							<a class="nav-link text-dark" asp-area="" asp-controller="Incident" asp-action="GetIncidents">Все обращения</a>

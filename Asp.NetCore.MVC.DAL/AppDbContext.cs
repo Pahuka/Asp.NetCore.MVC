@@ -24,7 +24,7 @@ public class AppDbContext : DbContext
 			Login = "admin",
 			Password = "admin",
 			IsAdministrator = true,
-			EditingDate = DateTime.UtcNow
+			EditingDate = DateTime.Now
 		}));
 	}
 }

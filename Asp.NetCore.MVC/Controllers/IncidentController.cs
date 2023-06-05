@@ -1,4 +1,5 @@
-﻿using Asp.NetCore.MVC.Domain.Models.Tables;
+﻿using Asp.NetCore.MVC.Domain.Enum;
+using Asp.NetCore.MVC.Domain.Models.Tables;
 using Asp.NetCore.MVC.Domain.ViewModels.Incident;
 using Asp.NetCore.MVC.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -22,13 +23,11 @@ public class IncidentController : Controller
 		var tempResult = responce.Data;
 
 		if (IncidentNumber != null && IncidentNumber != 0)
-			tempResult = responce.Data.Where(x => x.IncidentNumber.Equals(IncidentNumber));
+			tempResult = tempResult.Where(x => x.IncidentNumber.Equals(IncidentNumber));
 		if (!string.IsNullOrEmpty(PhoneNumber) && !PhoneNumber.Equals("Все"))
-			tempResult = responce.Data.Where(x => x.PhoneNumber.Equals(PhoneNumber));
-		
-		//TODO: Исправить поиск по IncidentFrom
+			tempResult = tempResult.Where(x => x.PhoneNumber.Equals(PhoneNumber));
 		if (!string.IsNullOrEmpty(IncidentFrom) && !IncidentFrom.Equals("Все"))
-			tempResult = responce.Data.Where(x => x.IncidentFrom.Equals(IncidentFrom));
+			tempResult = tempResult.Where(x => x.IncidentFrom.Equals(Enum.Parse<IncidentFrom>(IncidentFrom)));
 
 		var incidentSearch = new IncidentSearchViewModel
 		{

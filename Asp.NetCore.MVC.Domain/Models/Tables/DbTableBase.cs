@@ -5,7 +5,7 @@ public abstract class DbTableBase
 	protected DbTableBase()
 	{
 		Id = Guid.NewGuid();
-		EditingDate = DateTime.UtcNow;
+		EditingDate = DateTime.Now;
 	}
 
 	public Guid Id { get; private set; }
