@@ -51,10 +51,10 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Region = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReasonTitleId = table.Column<int>(type: "int", nullable: false),
+                    ReasonTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IncidentFromId = table.Column<int>(type: "int", nullable: false),
+                    IncidentFrom = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EditingDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -99,19 +99,19 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                 columns: new[] { "Id", "EditingDate", "From" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8982), "Колл-центр" },
-                    { 2, new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8984), "Сервисный центр" }
+                    { 1, new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4508), "Колл-центр" },
+                    { 2, new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4510), "Сервисный центр" }
                 });
 
             migrationBuilder.InsertData(
                 table: "DbTableReasonTitles",
                 columns: new[] { "Id", "EditingDate", "Reason" },
-                values: new object[] { 1, new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8954), "Тестовая причина" });
+                values: new object[] { 1, new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4485), "Тестовая причина" });
 
             migrationBuilder.InsertData(
                 table: "DbTableUsers",
                 columns: new[] { "Id", "EditingDate", "FirstName", "IsAdministrator", "LastName", "Login", "Password" },
-                values: new object[] { new Guid("1f8c887f-fcaf-419d-aaa6-9aa2f8b764f7"), new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8805), "Admin", true, "Admin", "admin", "admin" });
+                values: new object[] { new Guid("2ed1fe68-bdfa-4361-b3bc-1fe9f3b5caa3"), new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4355), "Admin", true, "Admin", "admin", "admin" });
         }
 
         /// <inheritdoc />

@@ -9,5 +9,6 @@ public class DbTableIncidentFrom : DbTableBase, IIncidentFrom
 	[Key]
 	[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 	public int Id { get; set; }
+
 	public string From { get; set; }
 }

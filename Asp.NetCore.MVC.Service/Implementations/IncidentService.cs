@@ -4,7 +4,6 @@ using Asp.NetCore.MVC.Domain.Models.Tables;
 using Asp.NetCore.MVC.Domain.Responce;
 using Asp.NetCore.MVC.Domain.ViewModels.Incident;
 using Asp.NetCore.MVC.Service.Interfaces;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Asp.NetCore.MVC.Service.Implementations;
 
@@ -22,18 +21,13 @@ public class IncidentService : IIncidentService
 		var responce = new Responce<bool>();
 		try
 		{
-			//var incident = new DbTableIncident
-			//{
-			//	City = incidentViewModel.Incident.City,
-			//	Country = incidentViewModel.Incident.Country,
-			//	Region = incidentViewModel.Incident.Region,
-			//	IncidentFrom = incidentViewModel.Incident.IncidentFrom,
-			//	PhoneNumber = incidentViewModel.Incident.PhoneNumber,
-			//	Content = incidentViewModel.Incident.Content,
-			//	ReasonTitleId = incidentViewModel.Incident.ReasonTitleId
-			//};
+			var incident = new DbTableIncident();
 
-			responce.Data = await _incidentRepository.Create(incidentViewModel.Incident);
+			incident = incidentViewModel.Incident;
+			incident.IncidentFrom = incidentViewModel.FromSelect;
+			incident.ReasonTitle = incidentViewModel.ReasonSelect;
+
+			responce.Data = await _incidentRepository.Create(incident);
 
 			return responce;
 		}
@@ -89,12 +83,7 @@ public class IncidentService : IIncidentService
 
 			var incidentViewModel = new IncidentCreateViewModel
 			{
-				Incident = incident,
-				//FromSelect = incident.IncidentFromId.ToString(),
-				//IncidentFrom = new List<SelectListItem> { new() { Value = $"{incident.IncidentFromId}" } },
-				//IncidentNumber = new SelectList(new int[1] { incident.IncidentNumber }),
-				//PhoneNumber = new SelectList(new string[1] { incident.PhoneNumber }),
-				//ReasonSelect = incident.ReasonTitleId.ToString()
+				Incident = incident
 			};
 
 			responce.StatusCode = StatusCode.OK;
@@ -128,9 +117,9 @@ public class IncidentService : IIncidentService
 			incident.City = incidentViewModel.Incident.City;
 			incident.Country = incidentViewModel.Incident.Country;
 			incident.Region = incidentViewModel.Incident.Region;
-			incident.IncidentFromId = int.Parse(incidentViewModel.FromSelect);
-			incident.ReasonTitleId = int.Parse(incidentViewModel.ReasonSelect);
-			incident.PhoneNumber = incidentViewModel.PhoneNumber.DataTextField;
+			incident.IncidentFrom = incidentViewModel.FromSelect;
+			incident.ReasonTitle = incidentViewModel.ReasonSelect;
+			incident.PhoneNumber = incidentViewModel.Incident.PhoneNumber;
 			incident.EditingDate = DateTime.Now;
 
 			await _incidentRepository.Update(incident);

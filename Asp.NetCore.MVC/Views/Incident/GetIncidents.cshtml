@@ -1,4 +1,4 @@
-﻿@model List<Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentViewModel>
+﻿@model Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentFilterViewModel
 
 <style>
 table, th, td {
@@ -6,18 +6,18 @@ table, th, td {
 }
 </style>
 
-@*<form method="get">
+<form method="get">
 	<div class="form-inline">
-		<label class="control-label">Номер обращения</label>
-		@Html.DropDownList("IncidentGuid", Model.IncidentGuid, new { @class = "form-control" })
+		@*<label class="control-label">Номер обращения</label>
+		@Html.DropDownList("IncidentNumber", Model.IncidentGuid, new { @class = "form-control" })*@
 		<label class="control-label">Источник обращения</label>
 		@Html.DropDownList("IncidentFrom", Model.IncidentFrom, new { @class = "form-control" })
-		<label class="control-label">Номер телефона абонента</label>
-		@Html.DropDownList("PhoneNumber", Model.PhoneNumber, new { @class = "form-control" })
+		<label class="control-label">Причина обращения</label>
+		@Html.DropDownList("ReasonTitle", Model.ReasonTitle, new { @class = "form-control" })
 
 		<input type="submit" value="Фильтр" class="btn btn-outline-dark"/>
 	</div>
-</form>*@
+</form>
 
 <table style="width:100%">
 	<tr>
@@ -32,15 +32,15 @@ table, th, td {
 		<th>Дата редактирования</th>
 		<th>Действие</th>
 	</tr>
-	@foreach (var incindent in Model)
+	@foreach (var incindent in Model.Incidents)
 	{
 		<tr>
 			<td>@incindent.IncidentNumber</td>
-			<td>@incindent.ReasonTitle.Reason</td>
+			<td>@incindent.ReasonTitle</td>
 			<td>@incindent.Country</td>
 			<td>@incindent.Region</td>
 			<td>@incindent.City</td>
-			<td>@incindent.IncidentFrom.From</td>
+			<td>@incindent.IncidentFrom</td>
 			<td>@incindent.PhoneNumber</td>
 			<td>@incindent.Content</td>
 			<td>@incindent.EditingDate</td>

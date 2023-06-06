@@ -8,8 +8,6 @@ public class IncidentCreateViewModel : ViewModelBase
 	public string FromSelect { get; set; }
 	public string ReasonSelect { get; set; }
 	public DbTableIncident Incident { get; set; }
-	public SelectList IncidentNumber { get; set; }
-	public List<SelectListItem> IncidentFrom { get; set; }
-	public SelectList PhoneNumber { get; set; }
-	public List<SelectListItem> ReasonTitle { get; set; }
+	public IEnumerable<SelectListItem> IncidentFrom { get; set; }
+	public IEnumerable<SelectListItem> ReasonTitle { get; set; }
 }

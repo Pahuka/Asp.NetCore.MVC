@@ -1,10 +1,7 @@
-﻿using Asp.NetCore.MVC.Domain.Enum;
-using Asp.NetCore.MVC.Domain.Models.Tables;
-using Asp.NetCore.MVC.Domain.ViewModels.Incident;
+﻿using Asp.NetCore.MVC.Domain.ViewModels.Incident;
 using Asp.NetCore.MVC.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace Asp.NetCore.MVC.Controllers;
 
@@ -23,35 +20,28 @@ public class IncidentController : Controller
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> GetIncidents(List<DbTableIncident> incidents)
+	public async Task<IActionResult> GetIncidents(IncidentFilterViewModel incidentFilterViewModel, string IncidentFrom,
+		string ReasonTitle)
 	{
 		var responce = await _incidentService.GetAll();
 		if (responce.Data == null)
 			return RedirectToAction("Error");
 
+		var filterResult = responce.Data;
+		if (!string.IsNullOrEmpty(IncidentFrom) && !IncidentFrom.Equals("Все источники"))
+			filterResult = filterResult.Where(x => x.IncidentFrom.Equals(IncidentFrom));
+		if (!string.IsNullOrEmpty(ReasonTitle))
+			filterResult = filterResult.Where(x => x.ReasonTitle.Equals(ReasonTitle));
 
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
 		{
-			var result = new List<IncidentViewModel>();
+			incidentFilterViewModel.Incidents = filterResult.ToList();
+			incidentFilterViewModel.ReasonTitle = _reasonService.GetAll().Result.Data
+				.Select(x => new SelectListItem { Text = x.Reason }).ToList();
+			incidentFilterViewModel.IncidentFrom = _incidentFromService.GetAll().Result.Data
+				.Select(x => new SelectListItem { Text = x.From }).ToList();
 
-			foreach (var incident in responce.Data.ToList())
-			{
-				var incidentViewModel = new IncidentViewModel()
-				{
-					IncidentFrom = _incidentFromService.GetById(incident.IncidentFromId).Result.Data,
-					ReasonTitle = _reasonService.GetById(incident.ReasonTitleId).Result.Data,
-					PhoneNumber = incident.PhoneNumber,
-					City = incident.City,
-					Country = incident.Country,
-					Region = incident.Region,
-					Content = incident.Content,
-					IncidentNumber = incident.IncidentNumber,
-					EditingDate = incident.EditingDate
-				};
-				result.Add(incidentViewModel);
-			}
-
-			return View(result);
+			return View(incidentFilterViewModel);
 		}
 
 		return RedirectToAction("Error");
@@ -86,12 +76,12 @@ public class IncidentController : Controller
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
 		{
 			responce.Data.IncidentFrom = _incidentFromService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.From }).ToList();
+				.Select(x => new SelectListItem { Text = x.From }).ToList();
 			responce.Data.ReasonTitle = _reasonService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Reason }).ToList();
+				.Select(x => new SelectListItem { Text = x.Reason }).ToList();
 			return View(responce.Data);
 		}
-			
+
 		return RedirectToAction("Error");
 	}
 
@@ -100,7 +90,7 @@ public class IncidentController : Controller
 	public async Task<IActionResult> Edit(IncidentCreateViewModel incidentCreateViewModel)
 	{
 		//if (ModelState.IsValid) 
-			await _incidentService.Edit(incidentCreateViewModel.Incident.IncidentNumber, incidentCreateViewModel);
+		await _incidentService.Edit(incidentCreateViewModel.Incident.IncidentNumber, incidentCreateViewModel);
 
 		return RedirectToAction("GetIncidents");
 	}
@@ -111,9 +101,9 @@ public class IncidentController : Controller
 		var incidentCreateViewModel = new IncidentCreateViewModel
 		{
 			ReasonTitle = _reasonService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Reason }).ToList(),
+				.Select(x => new SelectListItem { Text = x.Reason }).ToList(),
 			IncidentFrom = _incidentFromService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.From }).ToList()
+				.Select(x => new SelectListItem { Text = x.From }).ToList()
 		};
 		return View(incidentCreateViewModel);
 	}
@@ -123,9 +113,6 @@ public class IncidentController : Controller
 	{
 		//if (ModelState.IsValid)
 		{
-			incidentViewModel.Incident.IncidentFromId = int.Parse(incidentViewModel.FromSelect);
-			incidentViewModel.Incident.ReasonTitleId = int.Parse(incidentViewModel.ReasonSelect);
-
 			await _incidentService.Create(incidentViewModel);
 		}
 

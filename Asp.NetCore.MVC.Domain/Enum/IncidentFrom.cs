@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Asp.NetCore.MVC.Domain.Enum;
+﻿namespace Asp.NetCore.MVC.Domain.Enum;
 
 public enum IncidentFrom
 {

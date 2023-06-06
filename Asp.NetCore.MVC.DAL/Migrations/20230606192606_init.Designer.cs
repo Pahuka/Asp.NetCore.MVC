@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Asp.NetCore.MVC.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230606163820_init")]
+    [Migration("20230606192606_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -51,15 +51,17 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("IncidentFromId")
-                        .HasColumnType("int");
+                    b.Property<string>("IncidentFrom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReasonTitleId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReasonTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Region")
                         .IsRequired()
@@ -93,13 +95,13 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            EditingDate = new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8982),
+                            EditingDate = new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4508),
                             From = "Колл-центр"
                         },
                         new
                         {
                             Id = 2,
-                            EditingDate = new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8984),
+                            EditingDate = new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4510),
                             From = "Сервисный центр"
                         });
                 });
@@ -151,7 +153,7 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            EditingDate = new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8954),
+                            EditingDate = new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4485),
                             Reason = "Тестовая причина"
                         });
                 });
@@ -191,8 +193,8 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1f8c887f-fcaf-419d-aaa6-9aa2f8b764f7"),
-                            EditingDate = new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8805),
+                            Id = new Guid("2ed1fe68-bdfa-4361-b3bc-1fe9f3b5caa3"),
+                            EditingDate = new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4355),
                             FirstName = "Admin",
                             IsAdministrator = true,
                             LastName = "Admin",

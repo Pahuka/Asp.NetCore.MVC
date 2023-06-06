@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-using Asp.NetCore.MVC.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Asp.NetCore.MVC.Controllers;
 

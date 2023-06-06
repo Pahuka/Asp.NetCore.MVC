@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Asp.NetCore.MVC.Domain.Models.Tables;
 using Asp.NetCore.MVC.Domain.ViewModels.IncidentFrom;
 using Asp.NetCore.MVC.Domain.ViewModels.ReasonTitle;
 
