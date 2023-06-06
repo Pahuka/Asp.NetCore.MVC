@@ -8,8 +8,10 @@
 
   <ItemGroup>
     <Folder Include="Enum\" />
-    <Folder Include="ViewModels\Incident\" />
     <Folder Include="ViewModels\Account\" />
+    <Folder Include="ViewModels\Interfaces\" />
+    <Folder Include="ViewModels\ReasonTitle\" />
+    <Folder Include="ViewModels\IncidentFrom\" />
   </ItemGroup>
 
   <ItemGroup>

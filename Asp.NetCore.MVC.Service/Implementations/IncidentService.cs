@@ -4,6 +4,7 @@ using Asp.NetCore.MVC.Domain.Models.Tables;
 using Asp.NetCore.MVC.Domain.Responce;
 using Asp.NetCore.MVC.Domain.ViewModels.Incident;
 using Asp.NetCore.MVC.Service.Interfaces;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Asp.NetCore.MVC.Service.Implementations;
 
@@ -16,23 +17,23 @@ public class IncidentService : IIncidentService
 		_incidentRepository = incidentRepository;
 	}
 
-	public async Task<IResponce<bool>> Create(IncidentViewModel incidentViewModel)
+	public async Task<IResponce<bool>> Create(IncidentCreateViewModel incidentViewModel)
 	{
 		var responce = new Responce<bool>();
 		try
 		{
-			var incident = new DbTableIncident
-			{
-				City = incidentViewModel.City,
-				Country = incidentViewModel.Country,
-				Region = incidentViewModel.Region,
-				IncidentFrom = incidentViewModel.IncidentFrom,
-				PhoneNumber = incidentViewModel.PhoneNumber,
-				Content = incidentViewModel.Content,
-				Title = incidentViewModel.Title
-			};
+			//var incident = new DbTableIncident
+			//{
+			//	City = incidentViewModel.Incident.City,
+			//	Country = incidentViewModel.Incident.Country,
+			//	Region = incidentViewModel.Incident.Region,
+			//	IncidentFrom = incidentViewModel.Incident.IncidentFrom,
+			//	PhoneNumber = incidentViewModel.Incident.PhoneNumber,
+			//	Content = incidentViewModel.Incident.Content,
+			//	ReasonTitleId = incidentViewModel.Incident.ReasonTitleId
+			//};
 
-			responce.Data = await _incidentRepository.Create(incident);
+			responce.Data = await _incidentRepository.Create(incidentViewModel.Incident);
 
 			return responce;
 		}
@@ -73,9 +74,9 @@ public class IncidentService : IIncidentService
 		}
 	}
 
-	public async Task<IResponce<IncidentViewModel>> GetById(int id)
+	public async Task<IResponce<IncidentCreateViewModel>> GetById(int id)
 	{
-		var responce = new Responce<IncidentViewModel>();
+		var responce = new Responce<IncidentCreateViewModel>();
 		try
 		{
 			var incident = await _incidentRepository.Get(id);
@@ -86,16 +87,14 @@ public class IncidentService : IIncidentService
 				return responce;
 			}
 
-			var incidentViewModel = new IncidentViewModel
+			var incidentViewModel = new IncidentCreateViewModel
 			{
-				Country = incident.Country,
-				Region = incident.Region,
-				City = incident.City,
-				IncidentNumber = incident.IncidentNumber,
-				PhoneNumber = incident.PhoneNumber,
-				IncidentFrom = incident.IncidentFrom,
-				Content = incident.Content,
-				Title = incident.Title
+				Incident = incident,
+				//FromSelect = incident.IncidentFromId.ToString(),
+				//IncidentFrom = new List<SelectListItem> { new() { Value = $"{incident.IncidentFromId}" } },
+				//IncidentNumber = new SelectList(new int[1] { incident.IncidentNumber }),
+				//PhoneNumber = new SelectList(new string[1] { incident.PhoneNumber }),
+				//ReasonSelect = incident.ReasonTitleId.ToString()
 			};
 
 			responce.StatusCode = StatusCode.OK;
@@ -104,16 +103,16 @@ public class IncidentService : IIncidentService
 		}
 		catch (Exception e)
 		{
-			return new Responce<IncidentViewModel>
+			return new Responce<IncidentCreateViewModel>
 			{
 				Description = $"[GetIncident] : {e.Message}"
 			};
 		}
 	}
 
-	public async Task<IResponce<IncidentViewModel>> Edit(int id, IncidentViewModel incidentViewModel)
+	public async Task<IResponce<IncidentCreateViewModel>> Edit(int id, IncidentCreateViewModel incidentViewModel)
 	{
-		var responce = new Responce<IncidentViewModel>();
+		var responce = new Responce<IncidentCreateViewModel>();
 		try
 		{
 			var incident = await _incidentRepository.Get(id);
@@ -125,13 +124,13 @@ public class IncidentService : IIncidentService
 				return responce;
 			}
 
-			incident.IncidentFrom = incidentViewModel.IncidentFrom;
-			incident.Country = incidentViewModel.Country;
-			incident.City = incidentViewModel.City;
-			incident.Region = incidentViewModel.Region;
-			incident.Content = incidentViewModel.Content;
-			incident.Title = incidentViewModel.Title;
-			incident.PhoneNumber = incidentViewModel.PhoneNumber;
+			incident.Content = incidentViewModel.Incident.Content;
+			incident.City = incidentViewModel.Incident.City;
+			incident.Country = incidentViewModel.Incident.Country;
+			incident.Region = incidentViewModel.Incident.Region;
+			incident.IncidentFromId = int.Parse(incidentViewModel.FromSelect);
+			incident.ReasonTitleId = int.Parse(incidentViewModel.ReasonSelect);
+			incident.PhoneNumber = incidentViewModel.PhoneNumber.DataTextField;
 			incident.EditingDate = DateTime.Now;
 
 			await _incidentRepository.Update(incident);
@@ -142,7 +141,7 @@ public class IncidentService : IIncidentService
 		}
 		catch (Exception e)
 		{
-			return new Responce<IncidentViewModel>
+			return new Responce<IncidentCreateViewModel>
 			{
 				Description = $"[Edit] : {e.Message}"
 			};

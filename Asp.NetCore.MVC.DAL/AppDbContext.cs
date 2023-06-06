@@ -12,6 +12,8 @@ public class AppDbContext : DbContext
 	}
 
 	public DbSet<DbTableIncident> DbTableIncidents { get; set; }
+	public DbSet<DbTableReasonTitle> DbTableReasonTitles { get; set; }
+	public DbSet<DbTableIncidentFrom> DbTableIncidentFroms { get; set; }
 	public DbSet<DbTableIncidentHistory> DbTableIncidentHistories { get; set; }
 	public DbSet<DbTableUser> DbTableUsers { get; set; }
 
@@ -26,5 +28,36 @@ public class AppDbContext : DbContext
 			IsAdministrator = true,
 			EditingDate = DateTime.Now
 		}));
+		
+		modelBuilder.Entity<DbTableReasonTitle>(builder => builder.HasData(new DbTableReasonTitle
+		{
+			Id = 1,
+			Reason = "Тестовая причина",
+			EditingDate = DateTime.Now
+		}));
+
+		modelBuilder.Entity<DbTableIncidentFrom>(builder =>
+			builder.HasData(new DbTableIncidentFrom()
+			{
+				Id = 1,
+				From = "Колл-центр",
+				EditingDate = DateTime.Now
+			}, new DbTableIncidentFrom
+			{
+				Id = 2,
+				From = "Сервисный центр",
+				EditingDate = DateTime.Now
+			}));
+
+		//modelBuilder.Entity<DbTableIncidentFrom>(builder =>
+		//{
+		//	builder.HasOne(u => u.Incident)
+		//		.WithOne(p => p.IncidentFrom)
+		//		.HasForeignKey<DbTableIncident>(p => p.IncidentNumber);
+		//	//builder.HasOne(k => k.Incident)
+		//	//	.WithOne(x => x.IncidentFrom)
+		//	//	.HasForeignKey<DbTableIncidentFrom>(x => x.IncidentId)
+		//	//	.HasPrincipalKey<DbTableIncident>(x => x.Id);
+		//});
 	}
 }

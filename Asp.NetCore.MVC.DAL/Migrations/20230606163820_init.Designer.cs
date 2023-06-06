@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Asp.NetCore.MVC.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230603103845_init")]
+    [Migration("20230606163820_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -51,24 +51,57 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("IncidentFrom")
+                    b.Property<int>("IncidentFromId")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Region")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ReasonTitleId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Region")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IncidentNumber");
 
                     b.ToTable("DbTableIncidents");
+                });
+
+            modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncidentFrom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EditingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("From")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DbTableIncidentFroms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EditingDate = new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8982),
+                            From = "Колл-центр"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EditingDate = new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8984),
+                            From = "Сервисный центр"
+                        });
                 });
 
             modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncidentHistory", b =>
@@ -93,6 +126,34 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DbTableIncidentHistories");
+                });
+
+            modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableReasonTitle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EditingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DbTableReasonTitles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EditingDate = new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8954),
+                            Reason = "Тестовая причина"
+                        });
                 });
 
             modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableUser", b =>
@@ -130,8 +191,8 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d0dbaedf-0bda-4174-8f8a-69c88d7574f8"),
-                            EditingDate = new DateTime(2023, 6, 3, 10, 38, 45, 653, DateTimeKind.Utc).AddTicks(9243),
+                            Id = new Guid("1f8c887f-fcaf-419d-aaa6-9aa2f8b764f7"),
+                            EditingDate = new DateTime(2023, 6, 6, 21, 38, 19, 341, DateTimeKind.Local).AddTicks(8805),
                             FirstName = "Admin",
                             IsAdministrator = true,
                             LastName = "Admin",

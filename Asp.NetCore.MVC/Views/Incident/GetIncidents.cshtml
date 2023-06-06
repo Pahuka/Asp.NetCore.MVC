@@ -1,6 +1,4 @@
-﻿@using Asp.NetCore.MVC.Domain.Enum
-@using Microsoft.EntityFrameworkCore
-@model Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentSearchViewModel
+﻿@model List<Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentViewModel>
 
 <style>
 table, th, td {
@@ -8,10 +6,10 @@ table, th, td {
 }
 </style>
 
-<form method="get">
+@*<form method="get">
 	<div class="form-inline">
 		<label class="control-label">Номер обращения</label>
-		@Html.DropDownList("IncidentNumber", Model.IncidentNumber, new { @class = "form-control" })
+		@Html.DropDownList("IncidentGuid", Model.IncidentGuid, new { @class = "form-control" })
 		<label class="control-label">Источник обращения</label>
 		@Html.DropDownList("IncidentFrom", Model.IncidentFrom, new { @class = "form-control" })
 		<label class="control-label">Номер телефона абонента</label>
@@ -19,30 +17,30 @@ table, th, td {
 
 		<input type="submit" value="Фильтр" class="btn btn-outline-dark"/>
 	</div>
-</form>
+</form>*@
 
 <table style="width:100%">
 	<tr>
 		<th>Номер обращения</th>
-		<th>Заголовок</th>
+		<th>Причина обращения</th>
 		<th>Страна</th>
 		<th>Регион</th>
 		<th>Город</th>
 		<th>Источник обращения</th>
 		<th>Номер телефона абонента</th>
-		<th>Причина обращения</th>
+		<th>Текст обращения</th>
 		<th>Дата редактирования</th>
 		<th>Действие</th>
 	</tr>
-	@foreach (var incindent in Model.Incidents)
+	@foreach (var incindent in Model)
 	{
 		<tr>
 			<td>@incindent.IncidentNumber</td>
-			<td>@incindent.Title</td>
+			<td>@incindent.ReasonTitle.Reason</td>
 			<td>@incindent.Country</td>
 			<td>@incindent.Region</td>
 			<td>@incindent.City</td>
-			<td>@incindent.IncidentFrom</td>
+			<td>@incindent.IncidentFrom.From</td>
 			<td>@incindent.PhoneNumber</td>
 			<td>@incindent.Content</td>
 			<td>@incindent.EditingDate</td>
