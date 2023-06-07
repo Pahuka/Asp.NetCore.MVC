@@ -6,6 +6,11 @@ namespace Asp.NetCore.MVC.Domain.ViewModels.Incident;
 
 public class IncidentFilterViewModel : ViewModelBase
 {
+	public IncidentFilterViewModel()
+	{
+		CreateTime = DateTime.Now.Date;
+	}
+
 	public IEnumerable<DbTableIncident> Incidents { get; set; }
 	public List<SelectListItem> IncidentFromList { get; set; }
 	public List<SelectListItem> ReasonTitleList { get; set; }
@@ -24,4 +29,6 @@ public class IncidentFilterViewModel : ViewModelBase
 	[Display(Name = "Регион")] public string Region { get; set; }
 
 	[Display(Name = "Город")] public string City { get; set; }
+	[Display(Name = "Дата обращения")] public DateTime CreateTime { get; set; }
+	public bool IsAllDateSearch { get; set; }
 }

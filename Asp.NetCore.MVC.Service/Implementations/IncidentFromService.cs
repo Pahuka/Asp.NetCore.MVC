@@ -76,7 +76,7 @@ public class IncidentFromService : IIncidentFromService
 			var incident = await _incidentFromRepository.Get(id);
 			if (incident == null)
 			{
-				responce.Description = $"Источник обращения с номером {id} не найден";
+				responce.Description = $"Источник обращения с ИД:{id} не найден";
 				responce.StatusCode = StatusCode.OK;
 				return responce;
 			}

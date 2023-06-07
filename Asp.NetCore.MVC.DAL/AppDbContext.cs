@@ -63,16 +63,5 @@ public class AppDbContext : DbContext
 					From = "Все источники",
 					EditingDate = DateTime.Now
 				}));
-
-		//modelBuilder.Entity<DbTableIncidentFrom>(builder =>
-		//{
-		//	builder.HasOne(u => u.Incident)
-		//		.WithOne(p => p.IncidentFromList)
-		//		.HasForeignKey<DbTableIncident>(p => p.IncidentNumber);
-		//	//builder.HasOne(k => k.Incident)
-		//	//	.WithOne(x => x.IncidentFromList)
-		//	//	.HasForeignKey<DbTableIncidentFrom>(x => x.IncidentId)
-		//	//	.HasPrincipalKey<DbTableIncident>(x => x.Id);
-		//});
 	}
 }

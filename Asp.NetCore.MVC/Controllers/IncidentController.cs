@@ -47,6 +47,8 @@ public class IncidentController : Controller
 		if (!string.IsNullOrEmpty(incidentFilterViewModel.ReasonTitle) &&
 		    !incidentFilterViewModel.ReasonTitle.Equals("Все причины"))
 			filterResult = filterResult.Where(x => x.ReasonTitle.Equals(incidentFilterViewModel.ReasonTitle));
+		if (!incidentFilterViewModel.IsAllDateSearch)
+			filterResult = filterResult.Where(x => x.EditingDate.Date.Equals(incidentFilterViewModel.CreateTime));
 
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
 		{
@@ -105,9 +107,7 @@ public class IncidentController : Controller
 	[HttpPost]
 	public async Task<IActionResult> Edit(IncidentCreateViewModel incidentCreateViewModel)
 	{
-		//if (ModelState.IsValid) 
 		await _incidentService.Edit(incidentCreateViewModel.Incident.IncidentNumber, incidentCreateViewModel);
-
 		return RedirectToAction("GetIncidents");
 	}
 
@@ -127,11 +127,7 @@ public class IncidentController : Controller
 	[HttpPost]
 	public async Task<IActionResult> Create(IncidentCreateViewModel incidentViewModel)
 	{
-		//if (ModelState.IsValid)
-		{
-			await _incidentService.Create(incidentViewModel);
-		}
-
+		await _incidentService.Create(incidentViewModel);
 		return RedirectToAction("GetIncidents");
 	}
 

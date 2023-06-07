@@ -21,13 +21,10 @@ public class IncidentService : IIncidentService
 		var responce = new Responce<bool>();
 		try
 		{
-			var incident = new DbTableIncident();
+			incidentViewModel.Incident.IncidentFrom = incidentViewModel.FromSelect;
+			incidentViewModel.Incident.ReasonTitle = incidentViewModel.ReasonSelect;
 
-			incident = incidentViewModel.Incident;
-			incident.IncidentFrom = incidentViewModel.FromSelect;
-			incident.ReasonTitle = incidentViewModel.ReasonSelect;
-
-			responce.Data = await _incidentRepository.Create(incident);
+			responce.Data = await _incidentRepository.Create(incidentViewModel.Incident);
 
 			return responce;
 		}
@@ -49,7 +46,7 @@ public class IncidentService : IIncidentService
 			var incident = await _incidentRepository.Get(id);
 			if (incident == null)
 			{
-				responce.Description = $"Иницдент с номером {id} не найден";
+				responce.Description = $"Обращение с номером {id} не найдено";
 				responce.StatusCode = StatusCode.NotFound;
 				return responce;
 			}
@@ -76,7 +73,7 @@ public class IncidentService : IIncidentService
 			var incident = await _incidentRepository.Get(id);
 			if (incident == null)
 			{
-				responce.Description = $"Иницдент с номером {id} не найден";
+				responce.Description = $"Обращение с номером {id} не найдено";
 				responce.StatusCode = StatusCode.OK;
 				return responce;
 			}
@@ -94,7 +91,7 @@ public class IncidentService : IIncidentService
 		{
 			return new Responce<IncidentCreateViewModel>
 			{
-				Description = $"[GetIncident] : {e.Message}"
+				Description = $"[GetById] : {e.Message}"
 			};
 		}
 	}
@@ -108,7 +105,7 @@ public class IncidentService : IIncidentService
 
 			if (incident == null)
 			{
-				responce.Description = "Найдено 0 инцидентов";
+				responce.Description = "Найдено 0 обращений";
 				responce.StatusCode = StatusCode.NotFound;
 				return responce;
 			}
@@ -146,7 +143,7 @@ public class IncidentService : IIncidentService
 
 			if (incidents.Count() == 0)
 			{
-				responce.Description = "Найдено 0 инцидентов";
+				responce.Description = "Найдено 0 обращений";
 				responce.StatusCode = StatusCode.NotFound;
 				return responce;
 			}
