@@ -1,5 +1,4 @@
-﻿@using Asp.NetCore.MVC.Domain.Enum
-@model Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentViewModel
+﻿@model Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentCreateViewModel
 
 
 <div style="padding: 10px;"/>
@@ -13,34 +12,38 @@
 				<form asp-action="Create" enctype="multipart/form-data">
 					<div asp-validation-summary="All" style="font-size:23px; font-family:Impact, serif" class="text-danger text-center"></div>
 					<div class="form-group">
-						<label asp-for="Country"></label>
-						<input asp-for="Country" class="form-control" type="text">
+						<label asp-for="Incident.Country"></label>
+						<input asp-for="Incident.Country" class="form-control" type="text">
 					</div>
 					<div class="form-group">
-						<label asp-for="Region"></label>
-						<input asp-for="Region" class="form-control" type="text">
+						<label asp-for="Incident.Region"></label>
+						<input asp-for="Incident.Region" class="form-control" type="text">
 					</div>
 					<div class="form-group">
-						<label asp-for="City"></label>
-						<input asp-for="City" class="form-control" type="text">
+						<label asp-for="Incident.City"></label>
+						<input asp-for="Incident.City" class="form-control" type="text">
 					</div>
 					<div class="form-group">
-						<label asp-for="Title"></label>
-						<input asp-for="Title" class="form-control" type="text">
+						<label asp-for="ReasonTitle"></label>
+						<select asp-for="ReasonSelect" class="form-control" asp-items="@Model.ReasonTitle">
+							@*<option value="">Выберите причину обращения</option>*@
+						</select>
 					</div>
 					<div class="form-group">
 						<label asp-for="IncidentFrom"></label>
-						<select asp-for="IncidentFrom" class="form-control" asp-items="Html.GetEnumSelectList<IncidentFrom>()"></select>
+						<select asp-for="FromSelect" class="form-control" asp-items="@Model.IncidentFrom">
+							@*<option value="">Выберите источник обращения</option>*@
+						</select>
 					</div>
 					<div class="form-group">
-						<label asp-for="PhoneNumber"></label>
-						<input asp-for="PhoneNumber" class="form-control" type="text">
+						<label asp-for="Incident.PhoneNumber"></label>
+						<input asp-for="Incident.PhoneNumber" class="form-control" type="text">
 					</div>
 					<div class="form-group">
-						<label asp-for="Content"></label>
-						<textarea asp-for="Content" class="form-control"></textarea>
+						<label asp-for="Incident.Content"></label>
+						<textarea asp-for="Incident.Content" class="form-control"></textarea>
 					</div>
-					<button class="btn btn-primary btn-lg float-right" type="submit">Создать</button>
+					<button class="btn btn-outline-dark" type="submit">Создать</button>
 				</form>
 			</div>
 		</div>

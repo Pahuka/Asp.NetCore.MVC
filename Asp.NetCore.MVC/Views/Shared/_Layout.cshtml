@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<title>@ViewData["Title"] - Asp.NetCore.MVC</title>
+	<title>@ViewData["ReasonTitleList"] - Asp.NetCore.MVC</title>
 	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
 	<link rel="stylesheet" href="~/Asp.NetCore.MVC.styles.css" asp-append-version="true"/>
@@ -14,7 +14,7 @@
 	{
 		<p>Вы авторизованы под логином @User.Identity.Name</p>
 		<form method="post" asp-controller="Account" asp-action="Logout">
-			<input class="btn btn-danger rounded" style="font-family:'Comic Sans MS'; font-weight: bold; font-size:20px;" type="submit" value="Выход"/>
+			<input class="btn btn-outline-dark" type="submit" value="Выход"/>
 		</form>
 	}
 	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -26,9 +26,12 @@
 			</button>
 			<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 				<ul class="navbar-nav flex-grow-1">
-					@*<li class="nav-item">
-						<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-					</li>*@
+					@if (User.IsInRole("Administrator"))
+					{
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Dictionary" asp-action="Index">Справочники</a>
+						</li>
+					}
 					@if (!User.Identity.IsAuthenticated)
 					{
 						<li class="nav-item">

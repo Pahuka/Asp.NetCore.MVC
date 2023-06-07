@@ -4,8 +4,8 @@ namespace Asp.NetCore.MVC.Domain.ViewModels.Account;
 
 public class ChangePasswordViewModel
 {
-	[Required(ErrorMessage = "Укажите имя")]
-	public string UserName { get; set; }
+	[Required(ErrorMessage = "Укажите логин")]
+	public string Login { get; set; }
 
 	[Required(ErrorMessage = "Введите пароль")]
 	[DataType(DataType.Password)]

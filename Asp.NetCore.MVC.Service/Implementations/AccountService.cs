@@ -22,7 +22,7 @@ public class AccountService : IAccountService
 	{
 		try
 		{
-			var user = await _userRepository.GetAll().Result.FirstOrDefaultAsync(x => x.FirstName == model.Name);
+			var user = await _userRepository.GetAll().Result.FirstOrDefaultAsync(x => x.Login == model.Login);
 			if (user != null)
 				return new Responce<ClaimsIdentity>
 				{
@@ -31,7 +31,7 @@ public class AccountService : IAccountService
 
 			user = new DbTableUser
 			{
-				Login = model.Name,
+				Login = model.Login,
 				FirstName = "",
 				LastName = "",
 				IsAdministrator = false,
@@ -45,7 +45,7 @@ public class AccountService : IAccountService
 			return new Responce<ClaimsIdentity>
 			{
 				Data = result,
-				Description = "Объект добавился",
+				Description = "Пользователь зарегистрирован",
 				StatusCode = StatusCode.OK
 			};
 		}
@@ -63,7 +63,7 @@ public class AccountService : IAccountService
 	{
 		try
 		{
-			var user = await _userRepository.GetAll().Result.FirstOrDefaultAsync(x => x.Login == model.Name);
+			var user = await _userRepository.GetAll().Result.FirstOrDefaultAsync(x => x.Login == model.Login);
 			if (user == null)
 				return new Responce<ClaimsIdentity>
 				{
@@ -97,7 +97,7 @@ public class AccountService : IAccountService
 	{
 		try
 		{
-			var user = await _userRepository.GetAll().Result.FirstOrDefaultAsync(x => x.FirstName == model.UserName);
+			var user = await _userRepository.GetAll().Result.FirstOrDefaultAsync(x => x.Login == model.Login);
 			if (user == null)
 				return new Responce<bool>
 				{

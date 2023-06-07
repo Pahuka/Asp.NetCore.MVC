@@ -20,19 +20,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 	});
 builder.Services.AddTransient<IIncidentRepository, IncidentRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IReasonTitleRepository, ReasonTitleRepository>();
+builder.Services.AddTransient<IIncidentFromRepository, IncidentFromRepository>();
 builder.Services.AddTransient<IIncidentService, IncidentService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IAccountService, AccountService>();
+builder.Services.AddTransient<IReasonService, ReasonTitleService>();
+builder.Services.AddTransient<IIncidentFromService, IncidentFromService>();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-//if (!app.Environment.IsDevelopment())
-//{
-//    app.UseExceptionHandler("/Home/Error");
-//    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-//    app.UseHsts();
-//}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Asp.NetCore.MVC.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230603103845_init")]
+    [Migration("20230607083927_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -51,10 +51,15 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("IncidentFrom")
-                        .HasColumnType("int");
+                    b.Property<string>("IncidentFrom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReasonTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -62,13 +67,49 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("IncidentNumber");
 
                     b.ToTable("DbTableIncidents");
+                });
+
+            modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncidentFrom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EditingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("From")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DbTableIncidentFroms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 3,
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1205),
+                            From = "Колл-центр"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1224),
+                            From = "Сервисный центр"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1226),
+                            From = "Все источники"
+                        });
                 });
 
             modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncidentHistory", b =>
@@ -93,6 +134,40 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DbTableIncidentHistories");
+                });
+
+            modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableReasonTitle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EditingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DbTableReasonTitles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1174),
+                            Reason = "Все причины"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1177),
+                            Reason = "Тестовая причина"
+                        });
                 });
 
             modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableUser", b =>
@@ -130,8 +205,8 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d0dbaedf-0bda-4174-8f8a-69c88d7574f8"),
-                            EditingDate = new DateTime(2023, 6, 3, 10, 38, 45, 653, DateTimeKind.Utc).AddTicks(9243),
+                            Id = new Guid("778fc23c-7d9f-48e4-8f9e-94aaa6c1364e"),
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1052),
                             FirstName = "Admin",
                             IsAdministrator = true,
                             LastName = "Admin",

@@ -16,23 +16,15 @@ public class IncidentService : IIncidentService
 		_incidentRepository = incidentRepository;
 	}
 
-	public async Task<IResponce<bool>> Create(IncidentViewModel incidentViewModel)
+	public async Task<IResponce<bool>> Create(IncidentCreateViewModel incidentViewModel)
 	{
 		var responce = new Responce<bool>();
 		try
 		{
-			var incident = new DbTableIncident
-			{
-				City = incidentViewModel.City,
-				Country = incidentViewModel.Country,
-				Region = incidentViewModel.Region,
-				IncidentFrom = incidentViewModel.IncidentFrom,
-				PhoneNumber = incidentViewModel.PhoneNumber,
-				Content = incidentViewModel.Content,
-				Title = incidentViewModel.Title
-			};
+			incidentViewModel.Incident.IncidentFrom = incidentViewModel.FromSelect;
+			incidentViewModel.Incident.ReasonTitle = incidentViewModel.ReasonSelect;
 
-			responce.Data = await _incidentRepository.Create(incident);
+			responce.Data = await _incidentRepository.Create(incidentViewModel.Incident);
 
 			return responce;
 		}
@@ -54,7 +46,7 @@ public class IncidentService : IIncidentService
 			var incident = await _incidentRepository.Get(id);
 			if (incident == null)
 			{
-				responce.Description = $"Иницдент с номером {id} не найден";
+				responce.Description = $"Обращение с номером {id} не найдено";
 				responce.StatusCode = StatusCode.NotFound;
 				return responce;
 			}
@@ -73,29 +65,22 @@ public class IncidentService : IIncidentService
 		}
 	}
 
-	public async Task<IResponce<IncidentViewModel>> GetById(int id)
+	public async Task<IResponce<IncidentCreateViewModel>> GetById(int id)
 	{
-		var responce = new Responce<IncidentViewModel>();
+		var responce = new Responce<IncidentCreateViewModel>();
 		try
 		{
 			var incident = await _incidentRepository.Get(id);
 			if (incident == null)
 			{
-				responce.Description = $"Иницдент с номером {id} не найден";
+				responce.Description = $"Обращение с номером {id} не найдено";
 				responce.StatusCode = StatusCode.OK;
 				return responce;
 			}
 
-			var incidentViewModel = new IncidentViewModel
+			var incidentViewModel = new IncidentCreateViewModel
 			{
-				Country = incident.Country,
-				Region = incident.Region,
-				City = incident.City,
-				IncidentNumber = incident.IncidentNumber,
-				PhoneNumber = incident.PhoneNumber,
-				IncidentFrom = incident.IncidentFrom,
-				Content = incident.Content,
-				Title = incident.Title
+				Incident = incident
 			};
 
 			responce.StatusCode = StatusCode.OK;
@@ -104,34 +89,34 @@ public class IncidentService : IIncidentService
 		}
 		catch (Exception e)
 		{
-			return new Responce<IncidentViewModel>
+			return new Responce<IncidentCreateViewModel>
 			{
-				Description = $"[GetIncident] : {e.Message}"
+				Description = $"[GetById] : {e.Message}"
 			};
 		}
 	}
 
-	public async Task<IResponce<IncidentViewModel>> Edit(int id, IncidentViewModel incidentViewModel)
+	public async Task<IResponce<IncidentCreateViewModel>> Edit(int id, IncidentCreateViewModel incidentViewModel)
 	{
-		var responce = new Responce<IncidentViewModel>();
+		var responce = new Responce<IncidentCreateViewModel>();
 		try
 		{
 			var incident = await _incidentRepository.Get(id);
 
 			if (incident == null)
 			{
-				responce.Description = "Найдено 0 инцидентов";
+				responce.Description = "Найдено 0 обращений";
 				responce.StatusCode = StatusCode.NotFound;
 				return responce;
 			}
 
-			incident.IncidentFrom = incidentViewModel.IncidentFrom;
-			incident.Country = incidentViewModel.Country;
-			incident.City = incidentViewModel.City;
-			incident.Region = incidentViewModel.Region;
-			incident.Content = incidentViewModel.Content;
-			incident.Title = incidentViewModel.Title;
-			incident.PhoneNumber = incidentViewModel.PhoneNumber;
+			incident.Content = incidentViewModel.Incident.Content;
+			incident.City = incidentViewModel.Incident.City;
+			incident.Country = incidentViewModel.Incident.Country;
+			incident.Region = incidentViewModel.Incident.Region;
+			incident.IncidentFrom = incidentViewModel.FromSelect;
+			incident.ReasonTitle = incidentViewModel.ReasonSelect;
+			incident.PhoneNumber = incidentViewModel.Incident.PhoneNumber;
 			incident.EditingDate = DateTime.Now;
 
 			await _incidentRepository.Update(incident);
@@ -142,7 +127,7 @@ public class IncidentService : IIncidentService
 		}
 		catch (Exception e)
 		{
-			return new Responce<IncidentViewModel>
+			return new Responce<IncidentCreateViewModel>
 			{
 				Description = $"[Edit] : {e.Message}"
 			};
@@ -158,7 +143,7 @@ public class IncidentService : IIncidentService
 
 			if (incidents.Count() == 0)
 			{
-				responce.Description = "Найдено 0 инцидентов";
+				responce.Description = "Найдено 0 обращений";
 				responce.StatusCode = StatusCode.NotFound;
 				return responce;
 			}
