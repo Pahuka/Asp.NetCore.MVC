@@ -20,25 +20,35 @@ public class IncidentController : Controller
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> GetIncidents(IncidentFilterViewModel incidentFilterViewModel, string IncidentFrom,
-		string ReasonTitle)
+	public async Task<IActionResult> GetIncidents(IncidentFilterViewModel incidentFilterViewModel)
 	{
 		var responce = await _incidentService.GetAll();
 		if (responce.Data == null)
 			return RedirectToAction("Error");
 
 		var filterResult = responce.Data;
-		if (!string.IsNullOrEmpty(IncidentFrom) && !IncidentFrom.Equals("Все источники"))
-			filterResult = filterResult.Where(x => x.IncidentFrom.Equals(IncidentFrom));
-		if (!string.IsNullOrEmpty(ReasonTitle))
-			filterResult = filterResult.Where(x => x.ReasonTitle.Equals(ReasonTitle));
+		
+		if (incidentFilterViewModel.IncidentNumber != 0)
+			filterResult = filterResult.Where(x => x.IncidentNumber == incidentFilterViewModel.IncidentNumber);
+		if(!string.IsNullOrEmpty(incidentFilterViewModel.Country))
+			filterResult = filterResult.Where(x => x.Country.Equals(incidentFilterViewModel.Country));
+		if(!string.IsNullOrEmpty(incidentFilterViewModel.Region))
+			filterResult = filterResult.Where(x => x.Region.Equals(incidentFilterViewModel.Region));
+		if(!string.IsNullOrEmpty(incidentFilterViewModel.City))
+			filterResult = filterResult.Where(x => x.City.Equals(incidentFilterViewModel.City));
+		if(!string.IsNullOrEmpty(incidentFilterViewModel.PhoneNumber))
+			filterResult = filterResult.Where(x => x.PhoneNumber.Equals(incidentFilterViewModel.PhoneNumber));
+		if (!string.IsNullOrEmpty(incidentFilterViewModel.IncidentFrom) && !incidentFilterViewModel.IncidentFrom.Equals("Все источники"))
+			filterResult = filterResult.Where(x => x.IncidentFrom.Equals(incidentFilterViewModel.IncidentFrom));
+		if (!string.IsNullOrEmpty(incidentFilterViewModel.ReasonTitle))
+			filterResult = filterResult.Where(x => x.ReasonTitle.Equals(incidentFilterViewModel.ReasonTitle));
 
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
 		{
 			incidentFilterViewModel.Incidents = filterResult.ToList();
-			incidentFilterViewModel.ReasonTitle = _reasonService.GetAll().Result.Data
+			incidentFilterViewModel.ReasonTitleList = _reasonService.GetAll().Result.Data
 				.Select(x => new SelectListItem { Text = x.Reason }).ToList();
-			incidentFilterViewModel.IncidentFrom = _incidentFromService.GetAll().Result.Data
+			incidentFilterViewModel.IncidentFromList = _incidentFromService.GetAll().Result.Data
 				.Select(x => new SelectListItem { Text = x.From }).ToList();
 
 			return View(incidentFilterViewModel);
@@ -66,7 +76,6 @@ public class IncidentController : Controller
 	}
 
 	[HttpGet]
-	//[Authorize(Roles = "Administrator")]
 	public async Task<IActionResult> Edit(int id)
 	{
 		if (id == 0)
@@ -76,7 +85,7 @@ public class IncidentController : Controller
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
 		{
 			responce.Data.IncidentFrom = _incidentFromService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Text = x.From }).ToList();
+				.Select(x => new SelectListItem { Text = x.From }).Skip(1).ToList();
 			responce.Data.ReasonTitle = _reasonService.GetAll().Result.Data
 				.Select(x => new SelectListItem { Text = x.Reason }).ToList();
 			return View(responce.Data);
@@ -86,7 +95,6 @@ public class IncidentController : Controller
 	}
 
 	[HttpPost]
-	//[Authorize(Roles = "Administrator")]
 	public async Task<IActionResult> Edit(IncidentCreateViewModel incidentCreateViewModel)
 	{
 		//if (ModelState.IsValid) 
@@ -103,7 +111,7 @@ public class IncidentController : Controller
 			ReasonTitle = _reasonService.GetAll().Result.Data
 				.Select(x => new SelectListItem { Text = x.Reason }).ToList(),
 			IncidentFrom = _incidentFromService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Text = x.From }).ToList()
+				.Select(x => new SelectListItem { Text = x.From }).Skip(1).ToList()
 		};
 		return View(incidentCreateViewModel);
 	}

@@ -99,19 +99,20 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                 columns: new[] { "Id", "EditingDate", "From" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4508), "Колл-центр" },
-                    { 2, new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4510), "Сервисный центр" }
+                    { 1, new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7436), "Все источники" },
+                    { 2, new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7434), "Сервисный центр" },
+                    { 3, new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7432), "Колл-центр" }
                 });
 
             migrationBuilder.InsertData(
                 table: "DbTableReasonTitles",
                 columns: new[] { "Id", "EditingDate", "Reason" },
-                values: new object[] { 1, new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4485), "Тестовая причина" });
+                values: new object[] { 1, new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7408), "Тестовая причина" });
 
             migrationBuilder.InsertData(
                 table: "DbTableUsers",
                 columns: new[] { "Id", "EditingDate", "FirstName", "IsAdministrator", "LastName", "Login", "Password" },
-                values: new object[] { new Guid("2ed1fe68-bdfa-4361-b3bc-1fe9f3b5caa3"), new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4355), "Admin", true, "Admin", "admin", "admin" });
+                values: new object[] { new Guid("bc776b5e-be11-4476-b100-fdfe53559791"), new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7286), "Admin", true, "Admin", "admin", "admin" });
         }
 
         /// <inheritdoc />

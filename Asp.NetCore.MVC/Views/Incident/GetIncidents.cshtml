@@ -8,13 +8,29 @@ table, th, td {
 
 <form method="get">
 	<div class="form-inline">
-		@*<label class="control-label">Номер обращения</label>
-		@Html.DropDownList("IncidentNumber", Model.IncidentGuid, new { @class = "form-control" })*@
-		<label class="control-label">Источник обращения</label>
-		@Html.DropDownList("IncidentFrom", Model.IncidentFrom, new { @class = "form-control" })
+		<label asp-for="IncidentNumber"></label>
+		<input asp-for="IncidentNumber" class="form-control" type="text">
+		<label asp-for="ReasonTitle"></label>
+		<select asp-for="ReasonTitle" class="form-control" asp-items="@Model.ReasonTitleList">
+			@*<option value="">Выберите причину обращения</option>*@
+		</select>
+		<label asp-for="IncidentFrom"></label>
+		<select asp-for="IncidentFrom" class="form-control" asp-items="@Model.IncidentFromList">
+			@*<option value="">Выберите источник обращения</option>*@
+		</select>
+		<label asp-for="Country"></label>
+		<input asp-for="Country" class="form-control" type="text">
+		<label asp-for="Region"></label>
+		<input asp-for="Region" class="form-control" type="text">
+		<label asp-for="City"></label>
+		<input asp-for="City" class="form-control" type="text">
+		<label asp-for="PhoneNumber"></label>
+		<input asp-for="PhoneNumber" class="form-control" type="text">
+		@*<label class="control-label">Источник обращения</label>
+		@Html.DropDownList("IncidentFromList", Model.IncidentFromList, new { @class = "form-control" })
 		<label class="control-label">Причина обращения</label>
-		@Html.DropDownList("ReasonTitle", Model.ReasonTitle, new { @class = "form-control" })
-
+		@Html.DropDownList("ReasonTitleList", Model.ReasonTitleList, new { @class = "form-control" })
+*@
 		<input type="submit" value="Фильтр" class="btn btn-outline-dark"/>
 	</div>
 </form>

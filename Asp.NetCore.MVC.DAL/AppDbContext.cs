@@ -61,10 +61,10 @@ public class AppDbContext : DbContext
 		//modelBuilder.Entity<DbTableIncidentFrom>(builder =>
 		//{
 		//	builder.HasOne(u => u.Incident)
-		//		.WithOne(p => p.IncidentFrom)
+		//		.WithOne(p => p.IncidentFromList)
 		//		.HasForeignKey<DbTableIncident>(p => p.IncidentNumber);
 		//	//builder.HasOne(k => k.Incident)
-		//	//	.WithOne(x => x.IncidentFrom)
+		//	//	.WithOne(x => x.IncidentFromList)
 		//	//	.HasForeignKey<DbTableIncidentFrom>(x => x.IncidentId)
 		//	//	.HasPrincipalKey<DbTableIncident>(x => x.Id);
 		//});

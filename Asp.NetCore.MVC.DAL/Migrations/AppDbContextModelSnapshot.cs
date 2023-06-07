@@ -91,15 +91,21 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            EditingDate = new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4508),
+                            Id = 3,
+                            EditingDate = new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7432),
                             From = "Колл-центр"
                         },
                         new
                         {
                             Id = 2,
-                            EditingDate = new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4510),
+                            EditingDate = new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7434),
                             From = "Сервисный центр"
+                        },
+                        new
+                        {
+                            Id = 1,
+                            EditingDate = new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7436),
+                            From = "Все источники"
                         });
                 });
 
@@ -150,7 +156,7 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            EditingDate = new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4485),
+                            EditingDate = new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7408),
                             Reason = "Тестовая причина"
                         });
                 });
@@ -190,8 +196,8 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2ed1fe68-bdfa-4361-b3bc-1fe9f3b5caa3"),
-                            EditingDate = new DateTime(2023, 6, 7, 0, 26, 6, 199, DateTimeKind.Local).AddTicks(4355),
+                            Id = new Guid("bc776b5e-be11-4476-b100-fdfe53559791"),
+                            EditingDate = new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7286),
                             FirstName = "Admin",
                             IsAdministrator = true,
                             LastName = "Admin",
