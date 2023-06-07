@@ -1,0 +1,23 @@
+﻿@model Asp.NetCore.MVC.Domain.ViewModels.ReasonTitle.ReasonTitleViewModel
+
+<div style="padding: 10px;"/>
+<div class="col-md-12">
+	<div class="card-body">
+		<div class="card card-outline-secondary" style="background-color: white">
+			<div class="card-header">
+				<h3 class="mb-0 text-center ParagraphHome">Редактирование</h3>
+			</div>
+			<div class="card-body">
+				<form asp-action="EditReasonTitle" enctype="multipart/form-data">
+					<input asp-for="Id" hidden/>
+					<div asp-validation-summary="All" style="font-size:23px; font-family:Impact, serif" class="text-danger text-center"></div>
+					<div class="form-group">
+						<label asp-for="Reason"></label>
+						<input asp-for="Reason" class="form-control" type="text">
+					</div>
+					<button class="btn btn-primary btn-lg float-right" type="submit">Сохранить</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

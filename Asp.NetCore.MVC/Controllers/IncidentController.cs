@@ -66,7 +66,6 @@ public class IncidentController : Controller
 		return RedirectToAction("Error");
 	}
 
-	//[Authorize(Roles = "Administrator")]
 	public async Task<IActionResult> RemoveIncident(int id)
 	{
 		var responce = await _incidentService.Delete(id);
@@ -104,7 +103,7 @@ public class IncidentController : Controller
 	}
 
 	[HttpGet]
-	public async Task<IActionResult> Create()
+	public IActionResult Create()
 	{
 		var incidentCreateViewModel = new IncidentCreateViewModel
 		{

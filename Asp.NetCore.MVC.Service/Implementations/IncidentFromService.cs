@@ -1,8 +1,10 @@
 ﻿using Asp.NetCore.MVC.DAL.Interfaces;
+using Asp.NetCore.MVC.DAL.Repositories;
 using Asp.NetCore.MVC.Domain.Enum;
 using Asp.NetCore.MVC.Domain.Models.Tables;
 using Asp.NetCore.MVC.Domain.Responce;
 using Asp.NetCore.MVC.Domain.ViewModels.IncidentFrom;
+using Asp.NetCore.MVC.Domain.ViewModels.ReasonTitle;
 using Asp.NetCore.MVC.Service.Interfaces;
 
 namespace Asp.NetCore.MVC.Service.Implementations;
@@ -21,7 +23,7 @@ public class IncidentFromService : IIncidentFromService
 		var responce = new Responce<IQueryable<DbTableIncidentFrom>>();
 		try
 		{
-			var reasons = _incidentFromRepository.GetAll().Result;
+			var reasons = await _incidentFromRepository.GetAll();
 
 			if (reasons.Count() == 0)
 			{
@@ -95,6 +97,65 @@ public class IncidentFromService : IIncidentFromService
 			return new Responce<IncidentFromViewModel>
 			{
 				Description = $"[GetById] : {e.Message}"
+			};
+		}
+	}
+
+	public async Task<IResponce<IncidentFromViewModel>> Edit(int id, IncidentFromViewModel incidentFromViewModel)
+	{
+		var responce = new Responce<IncidentFromViewModel>();
+		try
+		{
+			var incident = await _incidentFromRepository.Get(id);
+
+			if (incident == null)
+			{
+				responce.Description = "Найдено 0 источников обращения";
+				responce.StatusCode = StatusCode.NotFound;
+				return responce;
+			}
+
+			incident.From = incidentFromViewModel.From;
+			incident.EditingDate = DateTime.Now;
+
+			await _incidentFromRepository.Update(incident);
+			responce.Data = incidentFromViewModel;
+			responce.StatusCode = StatusCode.OK;
+
+			return responce;
+		}
+		catch (Exception e)
+		{
+			return new Responce<IncidentFromViewModel>
+			{
+				Description = $"[Edit] : {e.Message}"
+			};
+		}
+	}
+
+	public async Task<IResponce<bool>> Delete(int id)
+	{
+		var responce = new Responce<bool>();
+		try
+		{
+			var incident = await _incidentFromRepository.Get(id);
+			if (incident == null)
+			{
+				responce.Description = $"Источник обращения с ИД:{id} не найден";
+				responce.StatusCode = StatusCode.NotFound;
+				return responce;
+			}
+
+			responce.StatusCode = StatusCode.OK;
+			responce.Data = await _incidentFromRepository.DeleteAsync(incident);
+			return responce;
+		}
+		catch (Exception e)
+		{
+			return new Responce<bool>
+			{
+				Description = $"[Delete] : {e.Message}",
+				Data = false
 			};
 		}
 	}

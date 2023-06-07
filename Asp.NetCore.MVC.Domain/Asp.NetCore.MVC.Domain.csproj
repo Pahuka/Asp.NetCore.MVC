@@ -12,6 +12,7 @@
     <Folder Include="ViewModels\Interfaces\" />
     <Folder Include="ViewModels\ReasonTitle\" />
     <Folder Include="ViewModels\IncidentFrom\" />
+    <Folder Include="ViewModels\Dictionary\" />
   </ItemGroup>
 
   <ItemGroup>

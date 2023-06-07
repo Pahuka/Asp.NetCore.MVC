@@ -26,12 +26,8 @@ table, th, td {
 		<input asp-for="City" class="form-control" type="text">
 		<label asp-for="PhoneNumber"></label>
 		<input asp-for="PhoneNumber" class="form-control" type="text">
-		@*<label class="control-label">Источник обращения</label>
-		@Html.DropDownList("IncidentFromList", Model.IncidentFromList, new { @class = "form-control" })
-		<label class="control-label">Причина обращения</label>
-		@Html.DropDownList("ReasonTitleList", Model.ReasonTitleList, new { @class = "form-control" })
-*@
-		<input type="submit" value="Фильтр" class="btn btn-outline-dark"/>
+
+		<input type="submit" value="Отфильтровать" class="btn btn-outline-dark"/>
 	</div>
 </form>
 
