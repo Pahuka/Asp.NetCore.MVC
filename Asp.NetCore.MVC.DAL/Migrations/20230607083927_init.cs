@@ -99,20 +99,24 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                 columns: new[] { "Id", "EditingDate", "From" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7436), "Все источники" },
-                    { 2, new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7434), "Сервисный центр" },
-                    { 3, new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7432), "Колл-центр" }
+                    { 1, new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1226), "Все источники" },
+                    { 2, new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1224), "Сервисный центр" },
+                    { 3, new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1205), "Колл-центр" }
                 });
 
             migrationBuilder.InsertData(
                 table: "DbTableReasonTitles",
                 columns: new[] { "Id", "EditingDate", "Reason" },
-                values: new object[] { 1, new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7408), "Тестовая причина" });
+                values: new object[,]
+                {
+                    { 1, new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1174), "Все причины" },
+                    { 2, new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1177), "Тестовая причина" }
+                });
 
             migrationBuilder.InsertData(
                 table: "DbTableUsers",
                 columns: new[] { "Id", "EditingDate", "FirstName", "IsAdministrator", "LastName", "Login", "Password" },
-                values: new object[] { new Guid("bc776b5e-be11-4476-b100-fdfe53559791"), new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7286), "Admin", true, "Admin", "admin", "admin" });
+                values: new object[] { new Guid("778fc23c-7d9f-48e4-8f9e-94aaa6c1364e"), new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1052), "Admin", true, "Admin", "admin", "admin" });
         }
 
         /// <inheritdoc />

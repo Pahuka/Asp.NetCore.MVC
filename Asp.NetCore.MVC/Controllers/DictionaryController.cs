@@ -21,8 +21,8 @@ public class DictionaryController : Controller
 	public async Task<IActionResult> Index()
 	{
 		var dictionaryViewModel = new DictionaryViewModel();
-		dictionaryViewModel.IncidentFromList = _incidentFromService.GetAll().Result.Data.ToList();
-		dictionaryViewModel.ReasonTitleList = _reasonService.GetAll().Result.Data.ToList();
+		dictionaryViewModel.IncidentFromList = _incidentFromService.GetAll().Result.Data.Skip(1).ToList();
+		dictionaryViewModel.ReasonTitleList = _reasonService.GetAll().Result.Data.Skip(1).ToList();
 
 		return View(dictionaryViewModel);
 	}
@@ -39,6 +39,7 @@ public class DictionaryController : Controller
 		var responce = await _reasonService.GetById(id);
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK) return View(responce.Data);
 
+		TempData["Message"] = responce.Description;
 		return RedirectToAction("Error");
 	}
 
@@ -55,6 +56,7 @@ public class DictionaryController : Controller
 		var responce = await _incidentFromService.GetById(id);
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK) return View(responce.Data);
 
+		TempData["Message"] = responce.Description;
 		return RedirectToAction("Error");
 	}
 
@@ -70,6 +72,8 @@ public class DictionaryController : Controller
 		var responce = await _reasonService.Delete(id);
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
 			return RedirectToAction("Index");
+
+		TempData["Message"] = responce.Description;
 		return RedirectToAction("Error");
 	}
 
@@ -78,6 +82,8 @@ public class DictionaryController : Controller
 		var responce = await _incidentFromService.Delete(id);
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
 			return RedirectToAction("Index");
+
+		TempData["Message"] = responce.Description;
 		return RedirectToAction("Error");
 	}
 
@@ -111,6 +117,7 @@ public class DictionaryController : Controller
 
 	public IActionResult Error()
 	{
+		ViewBag.Message = TempData["Message"];
 		return View();
 	}
 }

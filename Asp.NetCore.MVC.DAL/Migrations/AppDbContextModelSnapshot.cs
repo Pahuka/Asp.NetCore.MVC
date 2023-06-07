@@ -92,19 +92,19 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                         new
                         {
                             Id = 3,
-                            EditingDate = new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7432),
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1205),
                             From = "Колл-центр"
                         },
                         new
                         {
                             Id = 2,
-                            EditingDate = new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7434),
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1224),
                             From = "Сервисный центр"
                         },
                         new
                         {
                             Id = 1,
-                            EditingDate = new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7436),
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1226),
                             From = "Все источники"
                         });
                 });
@@ -156,7 +156,13 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            EditingDate = new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7408),
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1174),
+                            Reason = "Все причины"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1177),
                             Reason = "Тестовая причина"
                         });
                 });
@@ -196,8 +202,8 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bc776b5e-be11-4476-b100-fdfe53559791"),
-                            EditingDate = new DateTime(2023, 6, 7, 11, 21, 54, 239, DateTimeKind.Local).AddTicks(7286),
+                            Id = new Guid("778fc23c-7d9f-48e4-8f9e-94aaa6c1364e"),
+                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1052),
                             FirstName = "Admin",
                             IsAdministrator = true,
                             LastName = "Admin",

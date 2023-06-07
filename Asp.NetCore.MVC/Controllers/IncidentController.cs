@@ -24,23 +24,28 @@ public class IncidentController : Controller
 	{
 		var responce = await _incidentService.GetAll();
 		if (responce.Data == null)
+		{
+			TempData["Message"] = responce.Description;
 			return RedirectToAction("Error");
+		}
 
 		var filterResult = responce.Data;
-		
+
 		if (incidentFilterViewModel.IncidentNumber != 0)
 			filterResult = filterResult.Where(x => x.IncidentNumber == incidentFilterViewModel.IncidentNumber);
-		if(!string.IsNullOrEmpty(incidentFilterViewModel.Country))
+		if (!string.IsNullOrEmpty(incidentFilterViewModel.Country))
 			filterResult = filterResult.Where(x => x.Country.Equals(incidentFilterViewModel.Country));
-		if(!string.IsNullOrEmpty(incidentFilterViewModel.Region))
+		if (!string.IsNullOrEmpty(incidentFilterViewModel.Region))
 			filterResult = filterResult.Where(x => x.Region.Equals(incidentFilterViewModel.Region));
-		if(!string.IsNullOrEmpty(incidentFilterViewModel.City))
+		if (!string.IsNullOrEmpty(incidentFilterViewModel.City))
 			filterResult = filterResult.Where(x => x.City.Equals(incidentFilterViewModel.City));
-		if(!string.IsNullOrEmpty(incidentFilterViewModel.PhoneNumber))
+		if (!string.IsNullOrEmpty(incidentFilterViewModel.PhoneNumber))
 			filterResult = filterResult.Where(x => x.PhoneNumber.Equals(incidentFilterViewModel.PhoneNumber));
-		if (!string.IsNullOrEmpty(incidentFilterViewModel.IncidentFrom) && !incidentFilterViewModel.IncidentFrom.Equals("Все источники"))
+		if (!string.IsNullOrEmpty(incidentFilterViewModel.IncidentFrom) &&
+		    !incidentFilterViewModel.IncidentFrom.Equals("Все источники"))
 			filterResult = filterResult.Where(x => x.IncidentFrom.Equals(incidentFilterViewModel.IncidentFrom));
-		if (!string.IsNullOrEmpty(incidentFilterViewModel.ReasonTitle))
+		if (!string.IsNullOrEmpty(incidentFilterViewModel.ReasonTitle) &&
+		    !incidentFilterViewModel.ReasonTitle.Equals("Все причины"))
 			filterResult = filterResult.Where(x => x.ReasonTitle.Equals(incidentFilterViewModel.ReasonTitle));
 
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
@@ -54,6 +59,7 @@ public class IncidentController : Controller
 			return View(incidentFilterViewModel);
 		}
 
+		TempData["Message"] = responce.Description;
 		return RedirectToAction("Error");
 	}
 
@@ -71,6 +77,8 @@ public class IncidentController : Controller
 		var responce = await _incidentService.Delete(id);
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
 			return RedirectToAction("GetIncidents");
+
+		TempData["Message"] = responce.Description;
 		return RedirectToAction("Error");
 	}
 
@@ -86,10 +94,11 @@ public class IncidentController : Controller
 			responce.Data.IncidentFrom = _incidentFromService.GetAll().Result.Data
 				.Select(x => new SelectListItem { Text = x.From }).Skip(1).ToList();
 			responce.Data.ReasonTitle = _reasonService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Text = x.Reason }).ToList();
+				.Select(x => new SelectListItem { Text = x.Reason }).Skip(1).ToList();
 			return View(responce.Data);
 		}
 
+		TempData["Message"] = responce.Description;
 		return RedirectToAction("Error");
 	}
 
@@ -108,7 +117,7 @@ public class IncidentController : Controller
 		var incidentCreateViewModel = new IncidentCreateViewModel
 		{
 			ReasonTitle = _reasonService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Text = x.Reason }).ToList(),
+				.Select(x => new SelectListItem { Text = x.Reason }).Skip(1).ToList(),
 			IncidentFrom = _incidentFromService.GetAll().Result.Data
 				.Select(x => new SelectListItem { Text = x.From }).Skip(1).ToList()
 		};
@@ -128,6 +137,7 @@ public class IncidentController : Controller
 
 	public IActionResult Error()
 	{
+		ViewBag.Message = TempData["Message"];
 		return View();
 	}
 }

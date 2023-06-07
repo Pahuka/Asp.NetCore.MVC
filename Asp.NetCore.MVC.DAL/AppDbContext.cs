@@ -33,6 +33,12 @@ public class AppDbContext : DbContext
 			new DbTableReasonTitle
 			{
 				Id = 1,
+				Reason = "Все причины",
+				EditingDate = DateTime.Now
+			},
+			new DbTableReasonTitle
+			{
+				Id = 2,
 				Reason = "Тестовая причина",
 				EditingDate = DateTime.Now
 			}));

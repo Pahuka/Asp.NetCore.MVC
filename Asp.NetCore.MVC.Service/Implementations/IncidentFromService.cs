@@ -1,10 +1,8 @@
 ﻿using Asp.NetCore.MVC.DAL.Interfaces;
-using Asp.NetCore.MVC.DAL.Repositories;
 using Asp.NetCore.MVC.Domain.Enum;
 using Asp.NetCore.MVC.Domain.Models.Tables;
 using Asp.NetCore.MVC.Domain.Responce;
 using Asp.NetCore.MVC.Domain.ViewModels.IncidentFrom;
-using Asp.NetCore.MVC.Domain.ViewModels.ReasonTitle;
 using Asp.NetCore.MVC.Service.Interfaces;
 
 namespace Asp.NetCore.MVC.Service.Implementations;

@@ -1,5 +1,11 @@
 ﻿@model Asp.NetCore.MVC.Domain.ViewModels.Dictionary.DictionaryViewModel
 
+<style>
+	table, th, td {
+		border: 2px solid black;
+	}
+</style>
+
 <div>
 	<h2>Все причины обращений</h2>
 	<table style="width:100%">
@@ -14,17 +20,14 @@
 				<td>@reason.Reason</td>
 				<td>@reason.EditingDate</td>
 				<td>
-					@if (User.IsInRole("Administrator"))
-					{
-						<form asp-controller="Dictionary" asp-action="EditReasonTitle" method="get">
-							<input type="number" id="id" name="id" value="@reason.Id" hidden="true"/>
-							<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>
-						</form>
-						<form asp-controller="Dictionary" asp-action="RemoveReasonTitle">
-							<input type="number" id="id" name="id" value="@reason.Id" hidden="true"/>
-							<input type="submit" value="Удалить" class="btn btn-outline-dark"/>
-						</form>
-					}
+					<form asp-controller="Dictionary" asp-action="EditReasonTitle" method="get">
+						<input type="number" id="id" name="id" value="@reason.Id" hidden="true"/>
+						<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>
+					</form>
+					<form asp-controller="Dictionary" asp-action="RemoveReasonTitle">
+						<input type="number" id="id" name="id" value="@reason.Id" hidden="true"/>
+						<input type="submit" value="Удалить" class="btn btn-outline-dark"/>
+					</form>
 				</td>
 			</tr>
 		}
@@ -42,29 +45,25 @@
 			<th>Дата редактирования</th>
 			<th>Действие</th>
 		</tr>
-		@foreach (var sourceFrom in Model.IncidentFromList.Skip(1))
+		@foreach (var sourceFrom in Model.IncidentFromList)
 		{
 			<tr>
 				<td>@sourceFrom.From</td>
 				<td>@sourceFrom.EditingDate</td>
 				<td>
-					@if (User.IsInRole("Administrator"))
-					{
-						<form asp-controller="Dictionary" asp-action="EditFromTitle" method="get">
-							<input type="number" id="id" name="id" value="@sourceFrom.Id" hidden="true" />
-							<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>
-						</form>
-						<form asp-controller="Dictionary" asp-action="RemoveFromTitle">
-							<input type="number" id="id" name="id" value="@sourceFrom.Id" hidden="true" />
-							<input type="submit" value="Удалить" class="btn btn-outline-dark"/>
-						</form>
-					}
+					<form asp-controller="Dictionary" asp-action="EditFromTitle" method="get">
+						<input type="number" id="id" name="id" value="@sourceFrom.Id" hidden="true"/>
+						<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>
+					</form>
+					<form asp-controller="Dictionary" asp-action="RemoveFromTitle">
+						<input type="number" id="id" name="id" value="@sourceFrom.Id" hidden="true"/>
+						<input type="submit" value="Удалить" class="btn btn-outline-dark"/>
+					</form>
 				</td>
 			</tr>
 		}
 	</table>
 	<form asp-controller="Dictionary" asp-action="CreateFromTitle" method="get">
-		<input type="submit" value="Добавить" class="btn btn-outline-dark" />
+		<input type="submit" value="Добавить" class="btn btn-outline-dark"/>
 	</form>
 </dic>
-
