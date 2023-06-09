@@ -17,18 +17,18 @@
 		@foreach (var user in Model)
 		{
 			<tr>
-					<th scope="row">@user.FirstName</th>
+				<th scope="row">@user.FirstName</th>
 				<td>@user.LastName</td>
 				<td>@user.Login</td>
 				<td>
-				@if (user.IsAdministrator)
-				{
-					<p>Да</p>
-				}
-				else
-				{
-					<p>Нет</p>
-				}
+					@if (user.IsAdministrator)
+					{
+						<p>Да</p>
+					}
+					else
+					{
+						<p>Нет</p>
+					}
 				</td>
 				<td>@user.EditingDate</td>
 				<td>
