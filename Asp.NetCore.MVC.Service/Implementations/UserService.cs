@@ -89,7 +89,7 @@ public class UserService : IUserService
 			}
 
 			responce.StatusCode = StatusCode.OK;
-			responce.Data = new UserViewModel()
+			responce.Data = new UserViewModel
 			{
 				Login = user.Login,
 				Password = user.Password,

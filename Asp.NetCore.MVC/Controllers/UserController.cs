@@ -64,7 +64,7 @@ public class UserController : Controller
 	public async Task<IActionResult> CreateUser(UserViewModel userViewModel)
 	{
 		var responce = await _userService.Create(userViewModel);
-		if(responce.StatusCode == Domain.Enum.StatusCode.OK)
+		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
 			return RedirectToAction("GetAllUsers");
 
 		TempData["Message"] = responce.Description;

@@ -24,29 +24,29 @@
 				<td>@user.LastName</td>
 				<td>@user.Login</td>
 				<td>
-					@if (user.IsAdministrator)
-					{
-						<p>Да</p>
-					}
-					else
-					{
-						<p>Нет</p>
-					}
+				@if (user.IsAdministrator)
+				{
+					<p>Да</p>
+				}
+				else
+				{
+					<p>Нет</p>
+				}
 				<td>@user.EditingDate</td>
 				<td>
 					<form asp-controller="User" asp-action="EditUser" method="get">
-						<input type="text" id="login" name="login" value="@user.Login" hidden="true" />
-						<input type="submit" value="Редактировать" class="btn btn-outline-dark" />
+						<input type="text" id="login" name="login" value="@user.Login" hidden="true"/>
+						<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>
 					</form>
 					<form asp-controller="User" asp-action="RemoveUser">
-						<input type="text" id="login" name="login" value="@user.Login" hidden="true" />
-						<input type="submit" value="Удалить" class="btn btn-outline-dark" />
+						<input type="text" id="login" name="login" value="@user.Login" hidden="true"/>
+						<input type="submit" value="Удалить" class="btn btn-outline-dark"/>
 					</form>
 				</td>
 			</tr>
 		}
 	</table>
 	<form asp-controller="User" asp-action="CreateUser" method="get">
-		<input type="submit" value="Добавить" class="btn btn-outline-dark" />
+		<input type="submit" value="Добавить" class="btn btn-outline-dark"/>
 	</form>
 </div>
