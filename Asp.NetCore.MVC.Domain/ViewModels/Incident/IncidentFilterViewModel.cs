@@ -18,7 +18,7 @@ public class IncidentFilterViewModel : ViewModelBase
 	[Display(Name = "Номер телефона абонента")]
 	public string PhoneNumber { get; set; }
 
-	[Display(Name = "Номер обращения")] public int IncidentNumber { get; set; }
+	[Display(Name = "Номер обращения")] public int? IncidentNumber { get; set; }
 
 	[Display(Name = "Источник обращения")] public string IncidentFrom { get; set; }
 

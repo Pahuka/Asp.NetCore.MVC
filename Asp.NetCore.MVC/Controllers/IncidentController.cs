@@ -31,7 +31,7 @@ public class IncidentController : Controller
 
 		var filterResult = responce.Data;
 
-		if (incidentFilterViewModel.IncidentNumber != 0)
+		if (incidentFilterViewModel.IncidentNumber != null)
 			filterResult = filterResult.Where(x => x.IncidentNumber == incidentFilterViewModel.IncidentNumber);
 		if (!string.IsNullOrEmpty(incidentFilterViewModel.Country))
 			filterResult = filterResult.Where(x => x.Country.Equals(incidentFilterViewModel.Country));

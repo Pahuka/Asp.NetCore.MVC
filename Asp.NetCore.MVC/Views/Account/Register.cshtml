@@ -4,35 +4,27 @@
 }
 @model Asp.NetCore.MVC.Domain.ViewModels.Account.RegisterViewModel
 
-<div style="padding: 20px;"></div>
-
-<div class="container py-5">
+<div class="container py-5 form-inline shadow p-3 mb-5 bg-light rounded">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="row justify-content-center">
 				<div class="col-md-10">
 					<span class="anchor"></span>
-					<div class="card card-account card-outline-secondary border border-white">
-						<div class="card-header">
-							<h3 class="mb-0 text-center paragraphHome text-black">Регистрация</h3>
+					<h3 class="mb-0 text-center paragraphHome text-black">Регистрация</h3>
+					<form asp-controller="Account" asp-action="Register">
+						<div asp-validation-summary="All" style="font-size:23px; font-family:Impact" class="text-danger text-center"></div>
+						<div class="form-group">
+							<input asp-for="Login" class="form-control textbox-dg font-weight-bold text-center" placeholder="Логин" type="text">
 						</div>
-						<div class="card-body">
-							<form asp-controller="Account" asp-action="Register">
-								<div asp-validation-summary="All" style="font-size:23px; font-family:Impact" class="text-danger text-center"></div>
-								<div class="form-group">
-									<input asp-for="Login" class="form-control textbox-dg font-weight-bold text-center" placeholder="Логин" type="text">
-								</div>
-								<div class="form-group">
-									<input autocomplete="new-password" asp-for="Password" placeholder="Пароль" class="form-control textbox-dg font-weight-bold text-center" type="password">
-								</div>
-								<span class="text-black" style="font-size: small; font-family:'Comic Sans MS'">Пароль должен быть длиной больше 6 символов и иметь только латинские символы</span>
-								<div class="form-group">
-									<input autocomplete="new-password" asp-for="PasswordConfirm" placeholder="Подтвердите пароль" class="form-control textbox-dg font-weight-bold text-center" type="password">
-								</div>
-								<button class="btn btn-outline-dark" type="submit">Зарегистрироваться</button>
-							</form>
+						<div class="form-group">
+							<input autocomplete="new-password" asp-for="Password" placeholder="Пароль" class="form-control textbox-dg font-weight-bold text-center" type="password">
 						</div>
-					</div>
+						<span class="text-black" style="font-size: small; font-family:'Comic Sans MS'">Пароль должен быть длиной больше 6 символов и иметь только латинские символы</span>
+						<div class="form-group">
+							<input autocomplete="new-password" asp-for="PasswordConfirm" placeholder="Подтвердите пароль" class="form-control textbox-dg font-weight-bold text-center" type="password">
+						</div>
+						<button class="btn btn-outline-dark m-1" type="submit">Зарегистрироваться</button>
+					</form>
 				</div>
 			</div>
 		</div>
