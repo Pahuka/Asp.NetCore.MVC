@@ -47,7 +47,7 @@ public class IncidentController : Controller
 		if (!string.IsNullOrEmpty(incidentFilterViewModel.ReasonTitle) &&
 		    !incidentFilterViewModel.ReasonTitle.Equals("Все причины"))
 			filterResult = filterResult.Where(x => x.ReasonTitle.Equals(incidentFilterViewModel.ReasonTitle));
-		if (!incidentFilterViewModel.IsAllDateSearch)
+		if (incidentFilterViewModel.IsAllDateSearch)
 			filterResult = filterResult.Where(x => x.EditingDate.Date.Equals(incidentFilterViewModel.CreateTime));
 
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)

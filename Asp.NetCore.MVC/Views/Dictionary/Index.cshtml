@@ -18,7 +18,7 @@
 					<th scope="row">@reason.Reason</th>
 					<td>@reason.EditingDate</td>
 					<td>
-							<div class="btn-group" role="group">
+						<div class="btn-group" role="group">
 							<form asp-controller="Dictionary" asp-action="EditReasonTitle" method="get">
 								<input type="number" id="id" name="id" value="@reason.Id" hidden="true"/>
 								<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>
@@ -55,7 +55,7 @@
 					<th scope="row">@sourceFrom.From</th>
 					<td>@sourceFrom.EditingDate</td>
 					<td>
-							<div class="btn-group" role="group">
+						<div class="btn-group" role="group">
 							<form asp-controller="Dictionary" asp-action="EditFromTitle" method="get">
 								<input type="number" id="id" name="id" value="@sourceFrom.Id" hidden="true"/>
 								<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>
