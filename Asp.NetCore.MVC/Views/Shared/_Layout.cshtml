@@ -12,10 +12,12 @@
 <header>
 	@if (User.Identity.IsAuthenticated)
 	{
-		<p>Вы авторизованы под логином @User.Identity.Name</p>
-		<form method="post" asp-controller="Account" asp-action="Logout">
-			<input class="btn btn-outline-dark" type="submit" value="Выход"/>
-		</form>
+		<div class="m-3">
+			<p>Вы авторизованы под логином @User.Identity.Name</p>
+			<form method="post" asp-controller="Account" asp-action="Logout">
+				<input class="btn btn-outline-dark" type="submit" value="Выход"/>
+			</form>
+		</div>
 	}
 	<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 		<div class="container-fluid">

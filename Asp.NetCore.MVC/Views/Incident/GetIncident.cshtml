@@ -1,10 +1,33 @@
 ﻿@model Asp.NetCore.MVC.Domain.ViewModels.Incident.IncidentCreateViewModel
 
-<p>@Model.Incident.IncidentNumber</p>
-<p>@Model.ReasonTitle</p>
-<p>@Model.IncidentFrom</p>
-<p>@Model.Incident.PhoneNumber</p>
-<p>@Model.Incident.Country</p>
-<p>@Model.Incident.Region</p>
-<p>@Model.Incident.City</p>
-<p>@Model.Incident.Content</p>
+<div class="form-inline shadow p-3 mb-5 bg-light rounded">
+	<div asp-validation-summary="All" style="font-size:23px; font-family:Impact, serif" class="text-danger text-center"></div>
+	<div class="form-group">
+		<label asp-for="Incident.Country"></label>
+		<input class="form-control" type="text" placeholder="@Model.Incident.Country" readonly>
+	</div>
+	<div class="form-group">
+		<label asp-for="Incident.Region"></label>
+		<input class="form-control" type="text" placeholder="@Model.Incident.Region" readonly>
+	</div>
+	<div class="form-group">
+		<label asp-for="Incident.City"></label>
+		<input class="form-control" type="text" placeholder="@Model.Incident.City" readonly>
+	</div>
+	<div class="form-group">
+		<label asp-for="ReasonTitle"></label>
+		<input class="form-control" type="text" placeholder="@Model.Incident.ReasonTitle" readonly>
+	</div>
+	<div class="form-group">
+		<label asp-for="IncidentFrom"></label>
+		<input class="form-control" type="text" placeholder="@Model.Incident.IncidentFrom" readonly>
+	</div>
+	<div class="form-group">
+		<label asp-for="Incident.PhoneNumber"></label>
+		<input class="form-control" type="text" placeholder="@Model.Incident.PhoneNumber" readonly>
+	</div>
+	<div class="form-group">
+		<label asp-for="Incident.Content"></label>
+		<textarea asp-for="Incident.Content" class="form-control" readonly="readonly"></textarea>
+	</div>
+</div>

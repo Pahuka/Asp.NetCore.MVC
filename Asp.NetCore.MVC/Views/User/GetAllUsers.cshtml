@@ -1,14 +1,9 @@
 ﻿@model List<Asp.NetCore.MVC.Domain.Models.Tables.DbTableUser>
 
-<style>
-	table, th, td {
-		border: 2px solid black;
-	}
-</style>
-
-<div>
-	<h2>Все пользователи</h2>
-	<table style="width:100%">
+<div class="form-inline shadow p-3 mb-5 bg-light rounded">
+	<h3 class="mb-0 text-center ParagraphHome">Все пользователи</h3>
+	<table class="table table-striped shadow p-3 mb-5 bg-light rounded">
+		<thead>
 		<tr>
 			<th>Имя</th>
 			<th>Фамилия</th>
@@ -17,10 +12,12 @@
 			<th>Дата регистрации</th>
 			<th>Действие</th>
 		</tr>
+		</thead>
+		<tbody>
 		@foreach (var user in Model)
 		{
 			<tr>
-				<td>@user.FirstName</td>
+					<th scope="row">@user.FirstName</th>
 				<td>@user.LastName</td>
 				<td>@user.Login</td>
 				<td>
@@ -32,19 +29,23 @@
 				{
 					<p>Нет</p>
 				}
+				</td>
 				<td>@user.EditingDate</td>
 				<td>
-					<form asp-controller="User" asp-action="EditUser" method="get">
-						<input type="text" id="login" name="login" value="@user.Login" hidden="true"/>
-						<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>
-					</form>
-					<form asp-controller="User" asp-action="RemoveUser">
-						<input type="text" id="login" name="login" value="@user.Login" hidden="true"/>
-						<input type="submit" value="Удалить" class="btn btn-outline-dark"/>
-					</form>
+					<div class="m-1">
+						<form asp-controller="User" asp-action="EditUser" method="get">
+							<input type="text" id="login" name="login" value="@user.Login" hidden="true"/>
+							<input type="submit" value="Редактировать" class="btn btn-outline-dark"/>
+						</form>
+						<form asp-controller="User" asp-action="RemoveUser">
+							<input type="text" id="login" name="login" value="@user.Login" hidden="true"/>
+							<input type="submit" value="Удалить" class="btn btn-outline-dark"/>
+						</form>
+					</div>
 				</td>
 			</tr>
 		}
+		</tbody>
 	</table>
 	<form asp-controller="User" asp-action="CreateUser" method="get">
 		<input type="submit" value="Добавить" class="btn btn-outline-dark"/>
