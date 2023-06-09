@@ -1,5 +1,6 @@
 ﻿using Asp.NetCore.MVC.DAL.Interfaces;
 using Asp.NetCore.MVC.Domain.Models.Tables;
+using Microsoft.EntityFrameworkCore;
 
 namespace Asp.NetCore.MVC.DAL.Repositories;
 
@@ -37,8 +38,8 @@ public class UserRepository : IUserRepository
 		return entity;
 	}
 
-	public Task<DbTableUser> Get(string login)
+	public async Task<DbTableUser> Get(string login)
 	{
-		throw new NotImplementedException();
+		return await _appDbContext.DbTableUsers.FirstOrDefaultAsync(x => x.Login.Equals(login));
 	}
 }

@@ -1,0 +1,52 @@
+﻿@model List<Asp.NetCore.MVC.Domain.Models.Tables.DbTableUser>
+
+<style>
+	table, th, td {
+		border: 2px solid black;
+	}
+</style>
+
+<div>
+	<h2>Все пользователи</h2>
+	<table style="width:100%">
+		<tr>
+			<th>Имя</th>
+			<th>Фамилия</th>
+			<th>Логин</th>
+			<th>Является администратором</th>
+			<th>Дата регистрации</th>
+			<th>Действие</th>
+		</tr>
+		@foreach (var user in Model)
+		{
+			<tr>
+				<td>@user.FirstName</td>
+				<td>@user.LastName</td>
+				<td>@user.Login</td>
+				<td>
+					@if (user.IsAdministrator)
+					{
+						<p>Да</p>
+					}
+					else
+					{
+						<p>Нет</p>
+					}
+				<td>@user.EditingDate</td>
+				<td>
+					<form asp-controller="User" asp-action="EditUser" method="get">
+						<input type="text" id="login" name="login" value="@user.Login" hidden="true" />
+						<input type="submit" value="Редактировать" class="btn btn-outline-dark" />
+					</form>
+					<form asp-controller="User" asp-action="RemoveUser">
+						<input type="text" id="login" name="login" value="@user.Login" hidden="true" />
+						<input type="submit" value="Удалить" class="btn btn-outline-dark" />
+					</form>
+				</td>
+			</tr>
+		}
+	</table>
+	<form asp-controller="User" asp-action="CreateUser" method="get">
+		<input type="submit" value="Добавить" class="btn btn-outline-dark" />
+	</form>
+</div>

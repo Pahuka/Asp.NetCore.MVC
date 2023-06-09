@@ -59,6 +59,7 @@ public class UserService : IUserService
 			};
 
 			responce.Data = await _userRepository.Create(incident);
+			responce.StatusCode = StatusCode.OK;
 
 			return responce;
 		}
@@ -67,22 +68,53 @@ public class UserService : IUserService
 			return new Responce<bool>
 			{
 				Description = $"[Create] : {e.Message}",
-				Data = false
+				Data = false,
+				StatusCode = StatusCode.InternalServerError
 			};
 		}
 	}
 
-	public Task<IResponce<UserViewModel>> GetByLogin(string login)
+	public async Task<IResponce<UserViewModel>> GetByLogin(string login)
 	{
-		throw new NotImplementedException();
+		var responce = new Responce<UserViewModel>();
+		try
+		{
+			var user = await _userRepository.Get(login);
+
+			if (user == null)
+			{
+				responce.Description = "Найдено 0 пользователей";
+				responce.StatusCode = StatusCode.NotFound;
+				return responce;
+			}
+
+			responce.StatusCode = StatusCode.OK;
+			responce.Data = new UserViewModel()
+			{
+				Login = user.Login,
+				Password = user.Password,
+				IsAdministrator = user.IsAdministrator,
+				FirstName = user.FirstName,
+				LastName = user.LastName
+			};
+
+			return responce;
+		}
+		catch (Exception e)
+		{
+			return new Responce<UserViewModel>
+			{
+				Description = $"[GetByLogin] : {e.Message}"
+			};
+		}
 	}
 
-	public async Task<IResponce<DbTableUser>> Edit(string login, UserViewModel viewModel)
+	public async Task<IResponce<DbTableUser>> Edit(UserViewModel viewModel)
 	{
 		var responce = new Responce<DbTableUser>();
 		try
 		{
-			var user = await _userRepository.Get(login);
+			var user = await _userRepository.Get(viewModel.Login);
 
 			if (user == null)
 			{
@@ -121,11 +153,12 @@ public class UserService : IUserService
 			if (user == null)
 			{
 				responce.Description = $"Пользователь с логином {login} не найден";
-				responce.StatusCode = StatusCode.OK;
+				responce.StatusCode = StatusCode.NotFound;
 				return responce;
 			}
 
 			responce.Data = await _userRepository.DeleteAsync(user);
+			responce.StatusCode = StatusCode.OK;
 			return responce;
 		}
 		catch (Exception e)
