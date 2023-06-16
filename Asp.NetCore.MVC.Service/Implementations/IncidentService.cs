@@ -9,11 +9,16 @@ namespace Asp.NetCore.MVC.Service.Implementations;
 
 public class IncidentService : IIncidentService
 {
+	private readonly IIncidentFromRepository _incidentFromRepository;
 	private readonly IIncidentRepository _incidentRepository;
+	private readonly IReasonTitleRepository _reasonTitleRepository;
 
-	public IncidentService(IIncidentRepository incidentRepository)
+	public IncidentService(IIncidentRepository incidentRepository, IIncidentFromRepository incidentFromRepository,
+		IReasonTitleRepository reasonTitleRepository)
 	{
 		_incidentRepository = incidentRepository;
+		_incidentFromRepository = incidentFromRepository;
+		_reasonTitleRepository = reasonTitleRepository;
 	}
 
 	public async Task<IResponce<bool>> Create(IncidentCreateViewModel incidentViewModel)
@@ -21,9 +26,14 @@ public class IncidentService : IIncidentService
 		var responce = new Responce<bool>();
 		try
 		{
-			incidentViewModel.Incident.IncidentFrom = incidentViewModel.FromSelect;
-			incidentViewModel.Incident.ReasonTitle = incidentViewModel.ReasonSelect;
-
+			incidentViewModel.Incident.IncFrom =
+				await _incidentFromRepository.Get(int.Parse(incidentViewModel.FromSelect));
+			incidentViewModel.Incident.IncFrom.Incidents.Add(incidentViewModel.Incident);
+			incidentViewModel.Incident.IncReason =
+				await _reasonTitleRepository.Get(int.Parse(incidentViewModel.ReasonSelect));
+			incidentViewModel.Incident.IncReason.Incidents.Add(incidentViewModel.Incident);
+			await _incidentFromRepository.Update(incidentViewModel.Incident.IncFrom);
+			await _reasonTitleRepository.Update(incidentViewModel.Incident.IncReason);
 			responce.Data = await _incidentRepository.Create(incidentViewModel.Incident);
 
 			return responce;
@@ -114,8 +124,8 @@ public class IncidentService : IIncidentService
 			incident.City = incidentViewModel.Incident.City;
 			incident.Country = incidentViewModel.Incident.Country;
 			incident.Region = incidentViewModel.Incident.Region;
-			incident.IncidentFrom = incidentViewModel.FromSelect;
-			incident.ReasonTitle = incidentViewModel.ReasonSelect;
+			incident.IncFrom = await _incidentFromRepository.Get(int.Parse(incidentViewModel.FromSelect));
+			incident.IncReason = await _reasonTitleRepository.Get(int.Parse(incidentViewModel.ReasonSelect));
 			incident.PhoneNumber = incidentViewModel.Incident.PhoneNumber;
 			incident.EditingDate = DateTime.Now;
 
@@ -139,7 +149,7 @@ public class IncidentService : IIncidentService
 		var responce = new Responce<IQueryable<DbTableIncident>>();
 		try
 		{
-			var incidents = _incidentRepository.GetAll().Result;
+			var incidents = await _incidentRepository.GetAll();
 
 			if (incidents.Count() == 0)
 			{
