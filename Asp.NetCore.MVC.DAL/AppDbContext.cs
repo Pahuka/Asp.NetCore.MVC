@@ -63,5 +63,13 @@ public class AppDbContext : DbContext
 					From = "Все источники",
 					EditingDate = DateTime.Now
 				}));
+
+		modelBuilder.Entity<DbTableIncidentFrom>()
+			.HasMany(x => x.Incidents)
+			.WithOne(x => x.IncFrom);
+
+		modelBuilder.Entity<DbTableReasonTitle>()
+			.HasMany(x => x.Incidents)
+			.WithOne(x => x.IncReason);
 	}
 }

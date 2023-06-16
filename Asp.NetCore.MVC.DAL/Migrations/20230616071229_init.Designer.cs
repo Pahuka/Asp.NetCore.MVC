@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Asp.NetCore.MVC.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230607083927_init")]
+    [Migration("20230616071229_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -45,21 +45,19 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DbTableIncidentFromId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DbTableReasonTitleId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("EditingDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("IncidentFrom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReasonTitle")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -68,6 +66,10 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IncidentNumber");
+
+                    b.HasIndex("DbTableIncidentFromId");
+
+                    b.HasIndex("DbTableReasonTitleId");
 
                     b.ToTable("DbTableIncidents");
                 });
@@ -95,19 +97,19 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                         new
                         {
                             Id = 3,
-                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1205),
+                            EditingDate = new DateTime(2023, 6, 16, 12, 12, 29, 181, DateTimeKind.Local).AddTicks(3265),
                             From = "Колл-центр"
                         },
                         new
                         {
                             Id = 2,
-                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1224),
+                            EditingDate = new DateTime(2023, 6, 16, 12, 12, 29, 181, DateTimeKind.Local).AddTicks(3268),
                             From = "Сервисный центр"
                         },
                         new
                         {
                             Id = 1,
-                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1226),
+                            EditingDate = new DateTime(2023, 6, 16, 12, 12, 29, 181, DateTimeKind.Local).AddTicks(3289),
                             From = "Все источники"
                         });
                 });
@@ -159,13 +161,13 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1174),
+                            EditingDate = new DateTime(2023, 6, 16, 12, 12, 29, 181, DateTimeKind.Local).AddTicks(3230),
                             Reason = "Все причины"
                         },
                         new
                         {
                             Id = 2,
-                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1177),
+                            EditingDate = new DateTime(2023, 6, 16, 12, 12, 29, 181, DateTimeKind.Local).AddTicks(3232),
                             Reason = "Тестовая причина"
                         });
                 });
@@ -205,14 +207,43 @@ namespace Asp.NetCore.MVC.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("778fc23c-7d9f-48e4-8f9e-94aaa6c1364e"),
-                            EditingDate = new DateTime(2023, 6, 7, 13, 39, 26, 328, DateTimeKind.Local).AddTicks(1052),
+                            Id = new Guid("65c9c733-2d13-4f40-8ed4-05a148087036"),
+                            EditingDate = new DateTime(2023, 6, 16, 12, 12, 29, 181, DateTimeKind.Local).AddTicks(3071),
                             FirstName = "Admin",
                             IsAdministrator = true,
                             LastName = "Admin",
                             Login = "admin",
                             Password = "admin"
                         });
+                });
+
+            modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncident", b =>
+                {
+                    b.HasOne("Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncidentFrom", "IncFrom")
+                        .WithMany("Incidents")
+                        .HasForeignKey("DbTableIncidentFromId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Asp.NetCore.MVC.Domain.Models.Tables.DbTableReasonTitle", "IncReason")
+                        .WithMany("Incidents")
+                        .HasForeignKey("DbTableReasonTitleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("IncFrom");
+
+                    b.Navigation("IncReason");
+                });
+
+            modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableIncidentFrom", b =>
+                {
+                    b.Navigation("Incidents");
+                });
+
+            modelBuilder.Entity("Asp.NetCore.MVC.Domain.Models.Tables.DbTableReasonTitle", b =>
+                {
+                    b.Navigation("Incidents");
                 });
 #pragma warning restore 612, 618
         }

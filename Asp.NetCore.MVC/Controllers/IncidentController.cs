@@ -42,11 +42,11 @@ public class IncidentController : Controller
 		if (!string.IsNullOrEmpty(incidentFilterViewModel.PhoneNumber))
 			filterResult = filterResult.Where(x => x.PhoneNumber.Equals(incidentFilterViewModel.PhoneNumber));
 		if (!string.IsNullOrEmpty(incidentFilterViewModel.IncidentFrom) &&
-		    !incidentFilterViewModel.IncidentFrom.Equals("Все источники"))
-			filterResult = filterResult.Where(x => x.IncidentFrom.Equals(incidentFilterViewModel.IncidentFrom));
+		    !incidentFilterViewModel.IncidentFrom.Equals("1"))
+			filterResult = filterResult.Where(x => x.IncFrom.Id == int.Parse(incidentFilterViewModel.IncidentFrom));
 		if (!string.IsNullOrEmpty(incidentFilterViewModel.ReasonTitle) &&
-		    !incidentFilterViewModel.ReasonTitle.Equals("Все причины"))
-			filterResult = filterResult.Where(x => x.ReasonTitle.Equals(incidentFilterViewModel.ReasonTitle));
+		    !incidentFilterViewModel.ReasonTitle.Equals("1"))
+			filterResult = filterResult.Where(x => x.IncReason.Id == int.Parse(incidentFilterViewModel.ReasonTitle));
 		if (incidentFilterViewModel.IsAllDateSearch)
 			filterResult = filterResult.Where(x => x.EditingDate.Date.Equals(incidentFilterViewModel.CreateTime));
 
@@ -54,9 +54,9 @@ public class IncidentController : Controller
 		{
 			incidentFilterViewModel.Incidents = filterResult.ToList();
 			incidentFilterViewModel.ReasonTitleList = _reasonService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Text = x.Reason }).ToList();
+				.Select(x => new SelectListItem { Text = x.Reason, Value = x.Id.ToString() }).ToList();
 			incidentFilterViewModel.IncidentFromList = _incidentFromService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Text = x.From }).ToList();
+				.Select(x => new SelectListItem { Text = x.From, Value = x.Id.ToString() }).ToList();
 
 			return View(incidentFilterViewModel);
 		}
@@ -94,9 +94,9 @@ public class IncidentController : Controller
 		if (responce.StatusCode == Domain.Enum.StatusCode.OK)
 		{
 			responce.Data.IncidentFrom = _incidentFromService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Text = x.From }).Skip(1).ToList();
+				.Select(x => new SelectListItem { Text = x.From, Value = x.Id.ToString() }).Skip(1).ToList();
 			responce.Data.ReasonTitle = _reasonService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Text = x.Reason }).Skip(1).ToList();
+				.Select(x => new SelectListItem { Text = x.Reason, Value = x.Id.ToString() }).Skip(1).ToList();
 			return View(responce.Data);
 		}
 
@@ -117,9 +117,9 @@ public class IncidentController : Controller
 		var incidentCreateViewModel = new IncidentCreateViewModel
 		{
 			ReasonTitle = _reasonService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Text = x.Reason }).Skip(1).ToList(),
+				.Select(x => new SelectListItem { Text = x.Reason, Value = x.Id.ToString() }).Skip(1).ToList(),
 			IncidentFrom = _incidentFromService.GetAll().Result.Data
-				.Select(x => new SelectListItem { Text = x.From }).Skip(1).ToList()
+				.Select(x => new SelectListItem { Text = x.From, Value = x.Id.ToString() }).Skip(1).ToList()
 		};
 		return View(incidentCreateViewModel);
 	}

@@ -16,12 +16,15 @@ public class DbTableIncident : DbTableBase, IIncident
 
 	[Display(Name = "Город")] public string City { get; set; }
 
-	[Display(Name = "Причина обращения")] public string ReasonTitle { get; set; }
-
 	[Display(Name = "Номер телефона абонента")]
 	public string PhoneNumber { get; set; }
 
 	[Display(Name = "Текст обращения")] public string Content { get; set; }
 
-	[Display(Name = "Источник обращения")] public string IncidentFrom { get; set; }
+	[Display(Name = "Источник обращения")] public DbTableIncidentFrom? IncFrom { get; set; }
+
+	[Display(Name = "Причина обращения")] public DbTableReasonTitle? IncReason { get; set; }
+
+	public int DbTableIncidentFromId { get; set; }
+	public int DbTableReasonTitleId { get; set; }
 }

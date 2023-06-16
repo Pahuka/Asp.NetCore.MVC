@@ -21,12 +21,18 @@ public class IncidentRepository : IIncidentRepository
 
 	public async Task<DbTableIncident?> Get(int Id)
 	{
-		return await _appDbContext.DbTableIncidents.FirstOrDefaultAsync(id => id.IncidentNumber == Id);
+		return await _appDbContext.DbTableIncidents
+			.Include(x => x.IncFrom)
+			.Include(x => x.IncReason)
+			.FirstOrDefaultAsync(id => id.IncidentNumber == Id);
 	}
 
 	public async Task<IQueryable<DbTableIncident>> GetAll()
 	{
-		return _appDbContext.DbTableIncidents.AsQueryable();
+		return _appDbContext.DbTableIncidents
+			.Include(x => x.IncFrom)
+			.Include(x => x.IncReason)
+			.AsQueryable();
 	}
 
 	public async Task<bool> DeleteAsync(DbTableIncident entity)
